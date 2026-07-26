@@ -1,0 +1,263 @@
+[
+  {
+    "domain": "Demographics",
+    "feature": "age_years",
+    "definition": "Age at episode date (measure requires 67-85)",
+    "data_source": "Enrollment/eligibility",
+    "model": "Both",
+    "rationale": "Strong monotonic fracture risk; OMW denominator boundary",
+    "direction_notes": "Older = higher fracture risk; frailty exclusions apply 81+"
+  },
+  {
+    "domain": "Demographics",
+    "feature": "sex_female",
+    "definition": "Female (denominator requirement)",
+    "data_source": "Enrollment",
+    "model": "A",
+    "rationale": "Denominator constraint; postmenopausal risk",
+    "direction_notes": "Fixed for OMW"
+  },
+  {
+    "domain": "Demographics",
+    "feature": "race_ethnicity",
+    "definition": "Race/ethnicity category",
+    "data_source": "Enrollment/SDOH",
+    "model": "B",
+    "rationale": "Documented OMW-failure disparity (Boytsov 2017)",
+    "direction_notes": "Use for fairness auditing, not to ration care"
+  },
+  {
+    "domain": "Demographics",
+    "feature": "dual_eligible_LIS",
+    "definition": "Medicare-Medicaid dual / low-income subsidy",
+    "data_source": "Enrollment",
+    "model": "B",
+    "rationale": "Proxy for access barriers to DXA/pharmacy",
+    "direction_notes": "Higher failure risk"
+  },
+  {
+    "domain": "Geography/SDOH",
+    "feature": "region_ruralilty",
+    "definition": "State/region + rural-urban commuting area",
+    "data_source": "Address",
+    "model": "B",
+    "rationale": "Regional variation in OMW failure (Boytsov 2017)",
+    "direction_notes": "Access to DXA facilities varies"
+  },
+  {
+    "domain": "Geography/SDOH",
+    "feature": "area_deprivation_index",
+    "definition": "ADI / SVI at ZIP or census-tract",
+    "data_source": "Address+public",
+    "model": "B",
+    "rationale": "Neighborhood deprivation ~ lower follow-up",
+    "direction_notes": "Fairness-sensitive"
+  },
+  {
+    "domain": "Geography/SDOH",
+    "feature": "dxa_facility_distance",
+    "definition": "Distance/drive-time to nearest DXA site",
+    "data_source": "Address+provider dir",
+    "model": "B",
+    "rationale": "Access friction to numerator (BMD test)",
+    "direction_notes": "Longer = higher failure"
+  },
+  {
+    "domain": "Fracture event",
+    "feature": "fracture_site",
+    "definition": "Qualifying site (hip, vertebral, wrist, humerus, pelvis...)",
+    "data_source": "Medical claims dx",
+    "model": "Both",
+    "rationale": "Site drives both recurrence risk and care pathway",
+    "direction_notes": "Hip = highest risk + inpatient pathway"
+  },
+  {
+    "domain": "Fracture event",
+    "feature": "fracture_setting",
+    "definition": "Inpatient vs outpatient/ED episode",
+    "data_source": "Claims (IESD)",
+    "model": "B",
+    "rationale": "Inpatient hip has different (better) capture pathway",
+    "direction_notes": "Setting changes workflow"
+  },
+  {
+    "domain": "Fracture event",
+    "feature": "index_episode_date",
+    "definition": "IESD / discharge date anchoring 180-day window",
+    "data_source": "Claims",
+    "model": "B",
+    "rationale": "Defines time-to-deadline for outreach",
+    "direction_notes": "Operational clock"
+  },
+  {
+    "domain": "Fracture event",
+    "feature": "prior_fracture_count",
+    "definition": "Count of prior fragility fractures (lookback)",
+    "data_source": "Claims history",
+    "model": "A",
+    "rationale": "Core Garvan predictor; strong recurrence signal",
+    "direction_notes": "More = higher risk"
+  },
+  {
+    "domain": "Fracture event",
+    "feature": "prior_falls",
+    "definition": "Falls dx / injury claims in lookback",
+    "data_source": "Claims",
+    "model": "A",
+    "rationale": "FRAX-2024 falls input; independent predictor",
+    "direction_notes": "More = higher risk"
+  },
+  {
+    "domain": "Clinical/BMD",
+    "feature": "prior_bmd_test",
+    "definition": "BMD test in 24 mo before episode (exclusion)",
+    "data_source": "Claims CPT",
+    "model": "B",
+    "rationale": "OMW exclusion; also indicates engaged patient",
+    "direction_notes": "Excludes from denominator"
+  },
+  {
+    "domain": "Clinical/BMD",
+    "feature": "bmd_tscore",
+    "definition": "Most recent femoral-neck/spine T-score if available",
+    "data_source": "EHR/lab",
+    "model": "A",
+    "rationale": "Direct risk input where present",
+    "direction_notes": "Lower = higher risk; often missing"
+  },
+  {
+    "domain": "Clinical/BMD",
+    "feature": "prior_osteoporosis_dx",
+    "definition": "Existing osteoporosis diagnosis",
+    "data_source": "Claims dx",
+    "model": "Both",
+    "rationale": "Higher recurrence risk; may already be treated",
+    "direction_notes": "Interacts with treatment history"
+  },
+  {
+    "domain": "Medication",
+    "feature": "prior_osteo_therapy",
+    "definition": "Osteoporosis Rx in 12 mo before episode (exclusion)",
+    "data_source": "Pharmacy/med claims",
+    "model": "B",
+    "rationale": "OMW exclusion; indicates prior treatment",
+    "direction_notes": "Excludes from denominator"
+  },
+  {
+    "domain": "Medication",
+    "feature": "glucocorticoid_use",
+    "definition": "Chronic oral glucocorticoid exposure",
+    "data_source": "Pharmacy",
+    "model": "A",
+    "rationale": "FRAX input; secondary osteoporosis driver",
+    "direction_notes": "Higher risk"
+  },
+  {
+    "domain": "Medication",
+    "feature": "polypharmacy_count",
+    "definition": "Count of chronic medications",
+    "data_source": "Pharmacy",
+    "model": "B",
+    "rationale": "Proxy for complexity/competing priorities",
+    "direction_notes": "Higher = higher failure"
+  },
+  {
+    "domain": "Medication",
+    "feature": "medication_adherence_pdc",
+    "definition": "Historical PDC on chronic meds",
+    "data_source": "Pharmacy",
+    "model": "B",
+    "rationale": "Behavioral proxy for filling a new Rx",
+    "direction_notes": "Lower PDC = higher failure"
+  },
+  {
+    "domain": "Comorbidity",
+    "feature": "comorbidity_index",
+    "definition": "Elixhauser/CCI from claims",
+    "data_source": "Claims",
+    "model": "Both",
+    "rationale": "Competing risks + care complexity",
+    "direction_notes": "Nonlinear effect"
+  },
+  {
+    "domain": "Comorbidity",
+    "feature": "frailty_advanced_illness",
+    "definition": "Frailty + advanced-illness flags (HEDIS exclusion logic)",
+    "data_source": "Claims",
+    "model": "B",
+    "rationale": "Drives 67-80/81+ exclusions; competing mortality",
+    "direction_notes": "Excludes; also lowers benefit"
+  },
+  {
+    "domain": "Comorbidity",
+    "feature": "cardiovascular_disease",
+    "definition": "CVD diagnosis",
+    "data_source": "Claims",
+    "model": "A",
+    "rationale": "Kong 2023 CDM predictor",
+    "direction_notes": "Higher risk"
+  },
+  {
+    "domain": "Comorbidity",
+    "feature": "bmi_category",
+    "definition": "BMI band where available",
+    "data_source": "EHR/claims",
+    "model": "A",
+    "rationale": "FRAX-2025 BMI update; low BMI = higher risk",
+    "direction_notes": "U-shaped"
+  },
+  {
+    "domain": "Utilization",
+    "feature": "pcp_visits_12mo",
+    "definition": "Primary-care visit count in prior year",
+    "data_source": "Claims",
+    "model": "B",
+    "rationale": "Engagement proxy; more visits = more capture chances",
+    "direction_notes": "Lower = higher failure"
+  },
+  {
+    "domain": "Utilization",
+    "feature": "attributed_pcp",
+    "definition": "Has attributed/assigned PCP",
+    "data_source": "Attribution",
+    "model": "B",
+    "rationale": "No usual source of care raises failure",
+    "direction_notes": "Missing = higher failure"
+  },
+  {
+    "domain": "Utilization",
+    "feature": "prior_gap_closure",
+    "definition": "Historical performance on other HEDIS gaps",
+    "data_source": "Plan quality data",
+    "model": "B",
+    "rationale": "Past non-adherence predicts future",
+    "direction_notes": "Lower = higher failure"
+  },
+  {
+    "domain": "Provider",
+    "feature": "provider_specialty",
+    "definition": "Treating provider specialty (ortho/PCP/ED)",
+    "data_source": "Claims",
+    "model": "B",
+    "rationale": "Provider factors predict OMW failure (Boytsov 2017)",
+    "direction_notes": "Ortho-only path may miss follow-up"
+  },
+  {
+    "domain": "Provider",
+    "feature": "provider_panel_omw_rate",
+    "definition": "Provider/practice historical OMW rate",
+    "data_source": "Plan quality data",
+    "model": "B",
+    "rationale": "Provider is a strong cluster-level predictor",
+    "direction_notes": "Lower panel rate = higher failure"
+  },
+  {
+    "domain": "Provider",
+    "feature": "fls_available",
+    "definition": "Fracture Liaison Service available at treating facility",
+    "data_source": "Provider dir/plan",
+    "model": "B",
+    "rationale": "FLS presence is protective (Wu 2018)",
+    "direction_notes": "Available = lower failure"
+  }
+]

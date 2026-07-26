@@ -1,0 +1,112 @@
+[
+  {
+    "tactic": "Fracture Liaison Service (coordinator-led)",
+    "mechanism": "Systematic case-finding + coordinated evaluation/treatment after any fragility fracture",
+    "target": "System / care coordination",
+    "reported_effect": "Large, consistent increases in BMD testing & treatment initiation vs usual care; most effective single strategy",
+    "evidence": "Strong (multiple RCTs + meta-analyses)",
+    "hedis_relevance": "Directly closes numerator (BMD or Rx within window)",
+    "ref": "Wu 2018; Wu 2018 (SLR)",
+    "doi": "10.1016/j.bone.2018.03.018",
+    "doi_verified": "True"
+  },
+  {
+    "tactic": "Intensive multi-component QI (education + reminders + coordination)",
+    "mechanism": "Combined provider + patient activation with repeated contact",
+    "target": "Provider + patient",
+    "reported_effect": "Meta-analysis: multifaceted interventions most effective for raising DXA testing & treatment; single-component weakest",
+    "evidence": "Strong (meta-analysis of 43 RCTs)",
+    "hedis_relevance": "Raises both numerator components",
+    "ref": "Nayak 2018",
+    "doi": "10.1002/jbmr.3437",
+    "doi_verified": "True"
+  },
+  {
+    "tactic": "Priming/educating PCP after fracture (intensive vs minimal)",
+    "mechanism": "Notify & motivate the primary care physician to initiate treatment",
+    "target": "Provider",
+    "reported_effect": "RCT: intervention increased treatment initiation vs standard care; intensive > minimal",
+    "evidence": "Moderate-strong (RCT)",
+    "hedis_relevance": "Drives medication numerator",
+    "ref": "Roux 2013",
+    "doi": "10.3899/jrheum.120908",
+    "doi_verified": "True"
+  },
+  {
+    "tactic": "Inpatient treatment initiation during hip-fracture admission",
+    "mechanism": "Start osteoporosis medication before discharge (order-set/PDSA)",
+    "target": "System / inpatient workflow",
+    "reported_effect": "QI: dramatic rise in patients meeting standard of care; captures the highest-risk group",
+    "evidence": "Moderate (pre/post QI)",
+    "hedis_relevance": "Closes numerator for inpatient hip fractures within window",
+    "ref": "Kuiper 2018",
+    "doi": "10.1007/s00198-018-4416-x",
+    "doi_verified": "True"
+  },
+  {
+    "tactic": "Pharmacist-led case-finding & therapy initiation",
+    "mechanism": "Clinical pharmacist identifies untreated post-fracture patients, recommends BMD/therapy",
+    "target": "Provider / pharmacy",
+    "reported_effect": "QI: improved screening & pharmacotherapy initiation among elderly post-fracture patients",
+    "evidence": "Moderate (prospective QI)",
+    "hedis_relevance": "Raises both numerator components",
+    "ref": "Nadrash 2008",
+    "doi": "10.1345/aph.1K541",
+    "doi_verified": "True"
+  },
+  {
+    "tactic": "EHR-driven continuous case-finding (health-plan registry)",
+    "mechanism": "Continuous EMR screening flags post-fracture members; can target disparities",
+    "target": "System / population",
+    "reported_effect": "Integrated program improved DXA/treatment rates and reduced ethnic disparities in a large plan",
+    "evidence": "Moderate (program evaluation)",
+    "hedis_relevance": "Population-level identification feeds outreach; aligns to denominator",
+    "ref": "Navarro 2011",
+    "doi": "10.1007/s11999-011-1852-8",
+    "doi_verified": "True"
+  },
+  {
+    "tactic": "NLP/automated fracture detection from imaging reports + GP notification",
+    "mechanism": "Computerized detection of osteoporotic fractures triggers GP reminder",
+    "target": "System + provider",
+    "reported_effect": "Efficient detection; GP notification coincided with a small increase in management",
+    "evidence": "Weak-moderate (QI)",
+    "hedis_relevance": "Improves trigger identification (denominator capture)",
+    "ref": "Bolton 2024",
+    "doi": "10.1071/AH24214",
+    "doi_verified": "True"
+  },
+  {
+    "tactic": "Vertebral Fracture Assessment (VFA) added to FLS pathway",
+    "mechanism": "Detect silent vertebral fractures to reclassify risk & prompt treatment",
+    "target": "System / diagnostics",
+    "reported_effect": "QI: VFA integration increased treatment initiation among eligible FLS patients",
+    "evidence": "Weak-moderate (QI)",
+    "hedis_relevance": "Surfaces qualifying fractures & prompts numerator action",
+    "ref": "Greene 2023",
+    "doi": "10.1136/bmjoq-2023-002303",
+    "doi_verified": "True"
+  },
+  {
+    "tactic": "Plan-level care coordination (member-experienced)",
+    "mechanism": "Better follow-up, records-at-visit, cross-provider communication",
+    "target": "System / plan",
+    "reported_effect": "Higher member-reported care coordination associated with better HEDIS clinical-process performance",
+    "evidence": "Observational (large MA cohort)",
+    "hedis_relevance": "Correlated with better measure performance broadly",
+    "ref": "Elliott 2021",
+    "doi": "10.1007/s11606-021-07122-8",
+    "doi_verified": "True"
+  },
+  {
+    "tactic": "Risk-targeted outreach using patient/provider failure predictors",
+    "mechanism": "Target women predicted to miss the HEDIS measure (race, region, setting, provider factors)",
+    "target": "Population / model-driven",
+    "reported_effect": "Observational: identifies subgroups less likely to achieve OMW; supports targeting",
+    "evidence": "Observational (HEDIS-defined cohort)",
+    "hedis_relevance": "Directly maps predictors of OMW failure",
+    "ref": "Boytsov 2017",
+    "doi": "10.1177/1062860617691123",
+    "doi_verified": "True"
+  }
+]

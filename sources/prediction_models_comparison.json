@@ -1,0 +1,98 @@
+[
+  {
+    "model": "FRAX (WHO)",
+    "family": "Traditional / clinical risk factors",
+    "population": "Postmenopausal women & men, country-calibrated",
+    "predictors": "10 CRFs +/- femoral-neck BMD (age, BMI, prior fx, parental hip fx, glucocorticoids, RA, smoking, alcohol)",
+    "outcome": "10-yr major osteoporotic (MOF) & hip fracture",
+    "discrimination_auc": "~0.65-0.75 (MOF); higher for hip",
+    "validation": "Extensively externally validated worldwide",
+    "key_ref": "Kanis 2008; Ensrud 2009",
+    "doi": "10.1007/s00198-007-0543-5",
+    "doi_verified": "True"
+  },
+  {
+    "model": "Garvan (FRC)",
+    "family": "Traditional / clinical risk factors",
+    "population": "Adults >=50, registry & cohort",
+    "predictors": "Age, sex, weight/BMD, prior fractures (count), falls (count)",
+    "outcome": "5- & 10-yr any osteoporotic & hip fracture",
+    "discrimination_auc": "Strong gradient; C-stat ~0.69-0.76; outperformed CRF/BMD alone (Manitoba)",
+    "validation": "Validated Manitoba (n=19,521) & NZ cohorts",
+    "key_ref": "Nguyen 2008; Agarwal 2022",
+    "doi": "10.1007/s00198-008-0588-0",
+    "doi_verified": "True"
+  },
+  {
+    "model": "QFracture",
+    "family": "Traditional / EHR-derived equation",
+    "population": "UK primary care, 30-99 yr open cohort",
+    "predictors": "~30 clinical variables from routine primary-care records; no BMD",
+    "outcome": "10-yr hip & osteoporotic fracture",
+    "discrimination_auc": "Reported adjusted R2/D-stat high in derivation; C ~0.77-0.89 (hip)",
+    "validation": "Large internal + external UK EHR validation",
+    "key_ref": "Hippisley-Cox 2012",
+    "doi": "10.1136/bmj.e3427",
+    "doi_verified": "True"
+  },
+  {
+    "model": "Head-to-head external validation (FRAX vs Garvan vs QFracture)",
+    "family": "Comparative validation",
+    "population": "UK population EHR (THIN)",
+    "predictors": "Tool-specific",
+    "outcome": "Osteoporotic & hip fracture",
+    "discrimination_auc": "All three moderate; hip fx better discriminated than MOF; calibration imperfect",
+    "validation": "Retrospective EHR cohort",
+    "key_ref": "Dagan 2017",
+    "doi": "10.1136/bmj.i6755",
+    "doi_verified": "True"
+  },
+  {
+    "model": "ML survival models (Swiss registry)",
+    "family": "Machine learning",
+    "population": "Swiss Osteoporosis Registry n=5,944; validated UK Biobank n=5,474",
+    "predictors": "CRFs, T-scores, treatment history",
+    "outcome": "Vertebral, hip, any fracture (short & long term)",
+    "discrimination_auc": "ML ~ traditional Cox; C-index comparable, no consistent ML gain",
+    "validation": "External (UK Biobank)",
+    "key_ref": "Lehmann 2024",
+    "doi": "10.1093/jbmr/zjae089",
+    "doi_verified": "True"
+  },
+  {
+    "model": "ML risk models (meta-analysis)",
+    "family": "Machine learning (pooled)",
+    "population": "53 studies, 86 models, ~15.2M patients",
+    "predictors": "Heterogeneous (EHR, clinical, imaging)",
+    "outcome": "Fracture in osteoporosis",
+    "discrimination_auc": "Pooled C-index ~0.80 (0.78-0.82); high heterogeneity",
+    "validation": "Mostly internal; external validation sparse",
+    "key_ref": "Wu 2023 (meta-analysis)",
+    "doi": "10.1136/bmjopen-2022-071430",
+    "doi_verified": "True"
+  },
+  {
+    "model": "AI/ML for hip fracture (systematic review)",
+    "family": "Machine learning",
+    "population": "7 studies, n=330,099",
+    "predictors": "Clinical + imaging (some DXA-free)",
+    "outcome": "Hip fracture",
+    "discrimination_auc": "Variable; several AUC >0.80 but limited external validation",
+    "validation": "Limited/heterogeneous",
+    "key_ref": "Cha 2023",
+    "doi": "10.11005/jbm.2023.30.3.245",
+    "doi_verified": "True"
+  },
+  {
+    "model": "Common Data Model score (Korea)",
+    "family": "Traditional score from EHR/CDM",
+    "population": "OMOP-CDM hospital cohorts n=20,107 dev / 13,353 val",
+    "predictors": "Prior fracture, age, LS & total-hip T-score, CVD",
+    "outcome": "Major osteoporotic & hip fracture",
+    "discrimination_auc": "User-friendly score; validated independent cohort",
+    "validation": "Independent Korean cohort",
+    "key_ref": "Kong 2023",
+    "doi": "10.1007/s00198-023-06787-7",
+    "doi_verified": "True"
+  }
+]

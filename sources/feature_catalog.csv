@@ -1,0 +1,30 @@
+domain,feature,definition,data_source,model,rationale,direction_notes
+Demographics,age_years,Age at episode date (measure requires 67-85),Enrollment/eligibility,Both,Strong monotonic fracture risk; OMW denominator boundary,Older = higher fracture risk; frailty exclusions apply 81+
+Demographics,sex_female,Female (denominator requirement),Enrollment,A,Denominator constraint; postmenopausal risk,Fixed for OMW
+Demographics,race_ethnicity,Race/ethnicity category,Enrollment/SDOH,B,Documented OMW-failure disparity (Boytsov 2017),"Use for fairness auditing, not to ration care"
+Demographics,dual_eligible_LIS,Medicare-Medicaid dual / low-income subsidy,Enrollment,B,Proxy for access barriers to DXA/pharmacy,Higher failure risk
+Geography/SDOH,region_ruralilty,State/region + rural-urban commuting area,Address,B,Regional variation in OMW failure (Boytsov 2017),Access to DXA facilities varies
+Geography/SDOH,area_deprivation_index,ADI / SVI at ZIP or census-tract,Address+public,B,Neighborhood deprivation ~ lower follow-up,Fairness-sensitive
+Geography/SDOH,dxa_facility_distance,Distance/drive-time to nearest DXA site,Address+provider dir,B,Access friction to numerator (BMD test),Longer = higher failure
+Fracture event,fracture_site,"Qualifying site (hip, vertebral, wrist, humerus, pelvis...)",Medical claims dx,Both,Site drives both recurrence risk and care pathway,Hip = highest risk + inpatient pathway
+Fracture event,fracture_setting,Inpatient vs outpatient/ED episode,Claims (IESD),B,Inpatient hip has different (better) capture pathway,Setting changes workflow
+Fracture event,index_episode_date,IESD / discharge date anchoring 180-day window,Claims,B,Defines time-to-deadline for outreach,Operational clock
+Fracture event,prior_fracture_count,Count of prior fragility fractures (lookback),Claims history,A,Core Garvan predictor; strong recurrence signal,More = higher risk
+Fracture event,prior_falls,Falls dx / injury claims in lookback,Claims,A,FRAX-2024 falls input; independent predictor,More = higher risk
+Clinical/BMD,prior_bmd_test,BMD test in 24 mo before episode (exclusion),Claims CPT,B,OMW exclusion; also indicates engaged patient,Excludes from denominator
+Clinical/BMD,bmd_tscore,Most recent femoral-neck/spine T-score if available,EHR/lab,A,Direct risk input where present,Lower = higher risk; often missing
+Clinical/BMD,prior_osteoporosis_dx,Existing osteoporosis diagnosis,Claims dx,Both,Higher recurrence risk; may already be treated,Interacts with treatment history
+Medication,prior_osteo_therapy,Osteoporosis Rx in 12 mo before episode (exclusion),Pharmacy/med claims,B,OMW exclusion; indicates prior treatment,Excludes from denominator
+Medication,glucocorticoid_use,Chronic oral glucocorticoid exposure,Pharmacy,A,FRAX input; secondary osteoporosis driver,Higher risk
+Medication,polypharmacy_count,Count of chronic medications,Pharmacy,B,Proxy for complexity/competing priorities,Higher = higher failure
+Medication,medication_adherence_pdc,Historical PDC on chronic meds,Pharmacy,B,Behavioral proxy for filling a new Rx,Lower PDC = higher failure
+Comorbidity,comorbidity_index,Elixhauser/CCI from claims,Claims,Both,Competing risks + care complexity,Nonlinear effect
+Comorbidity,frailty_advanced_illness,Frailty + advanced-illness flags (HEDIS exclusion logic),Claims,B,Drives 67-80/81+ exclusions; competing mortality,Excludes; also lowers benefit
+Comorbidity,cardiovascular_disease,CVD diagnosis,Claims,A,Kong 2023 CDM predictor,Higher risk
+Comorbidity,bmi_category,BMI band where available,EHR/claims,A,FRAX-2025 BMI update; low BMI = higher risk,U-shaped
+Utilization,pcp_visits_12mo,Primary-care visit count in prior year,Claims,B,Engagement proxy; more visits = more capture chances,Lower = higher failure
+Utilization,attributed_pcp,Has attributed/assigned PCP,Attribution,B,No usual source of care raises failure,Missing = higher failure
+Utilization,prior_gap_closure,Historical performance on other HEDIS gaps,Plan quality data,B,Past non-adherence predicts future,Lower = higher failure
+Provider,provider_specialty,Treating provider specialty (ortho/PCP/ED),Claims,B,Provider factors predict OMW failure (Boytsov 2017),Ortho-only path may miss follow-up
+Provider,provider_panel_omw_rate,Provider/practice historical OMW rate,Plan quality data,B,Provider is a strong cluster-level predictor,Lower panel rate = higher failure
+Provider,fls_available,Fracture Liaison Service available at treating facility,Provider dir/plan,B,FLS presence is protective (Wu 2018),Available = lower failure
