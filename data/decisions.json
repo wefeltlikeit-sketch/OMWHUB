@@ -1,0 +1,8 @@
+[
+  {"id":"D-001","title":"Adopt dual-model architecture","status":"Approved","owner":"Analytics leadership role","decisionStatement":"Separate fracture risk from probability of OMW failure.","reviewDate":"2026-10-01"},
+  {"id":"D-002","title":"Use top-K capacity thresholds","status":"Under review","owner":"Care management role","decisionStatement":"Prioritize actionable cases within weekly capacity.","reviewDate":"2026-08-15"},
+  {"id":"D-003","title":"Fast-track inpatient hip fractures","status":"Piloting","owner":"Clinical operations role","decisionStatement":"Route qualifying signals to rapid treatment review.","reviewDate":"2026-09-15"},
+  {"id":"D-004","title":"Apply real-time exclusion refresh","status":"Draft","owner":"Measure operations role","decisionStatement":"Refresh exclusions immediately before outreach assignment.","reviewDate":"2026-08-20"},
+  {"id":"D-005","title":"Test a 7-day hold window","status":"Under review","owner":"Data strategy role","decisionStatement":"Hold non-urgent outreach while faster evidence sources settle.","reviewDate":"2026-08-12"},
+  {"id":"D-006","title":"Escalate open gaps at day 90","status":"Approved","owner":"Care management role","decisionStatement":"Reassess unresolved synthetic cases for a higher-intensity pathway.","reviewDate":"2026-11-01"}
+]

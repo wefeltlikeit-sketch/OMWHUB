@@ -1,10 +1,11 @@
 {
   "name": "omw-team-hub",
   "version": "1.0.0",
-  "description": "A shareable, offline-friendly package that consolidates OMW (Osteoporosis Management in Women Who Had a Fracture) research, measure logic, dual risk models, outreach design, engineering specs, and interactive demos.",
-  "main": "omw_gap_closing_strategy.js",
+  "description": "A data-safe, offline-friendly OMW strategy planning studio using synthetic and user-entered assumptions.",
+  "main": "assets/metrics.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test tests/*.test.js",
+    "privacy-check": "node tests/privacy-check.js"
   },
   "keywords": [],
   "author": "",

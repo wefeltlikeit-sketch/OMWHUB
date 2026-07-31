@@ -1,0 +1,6 @@
+[
+  {"id":"RK-01","title":"Insufficient outreach capacity","severity":"Severe","relatedAssumption":"A-004","mitigation":"Reduce portfolio scale or add approved capacity","relatedDecision":"D-002"},
+  {"id":"RK-02","title":"Overestimated intervention effect","severity":"Moderate","relatedAssumption":"A-005","mitigation":"Use ranges and validate during pilot","relatedDecision":"D-003"},
+  {"id":"RK-03","title":"Delayed claims evidence","severity":"Moderate","relatedAssumption":"A-006","mitigation":"Test hold window and faster sources","relatedDecision":"D-005"},
+  {"id":"RK-04","title":"Uneven subgroup reach","severity":"Moderate","relatedAssumption":"A-007","mitigation":"Allocate additional barrier-removal support","relatedDecision":"D-002"}
+]

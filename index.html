@@ -1,892 +1,181 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>OMW Team Hub — Osteoporosis Management in Women Who Had a Fracture</title>
-<style>
-  :root {
-    --bg: #f4f7f6;
-    --panel: #ffffff;
-    --ink: #14241f;
-    --muted: #5a6f68;
-    --line: #d5e3de;
-    --teal: #0d6e5a;
-    --teal-2: #14957a;
-    --teal-soft: #e7f6f1;
-    --amber: #b36b00;
-    --amber-soft: #fff4e5;
-    --red: #a33a2f;
-    --red-soft: #fdeceb;
-    --blue: #1a56db;
-    --blue-soft: #e8f0fe;
-    --shadow: 0 1px 3px rgba(20,36,31,.06), 0 8px 24px rgba(20,36,31,.05);
-    --radius: 12px;
-    --sidebar: 280px;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-    color: var(--ink);
-    background: var(--bg);
-    line-height: 1.55;
-  }
-  a { color: var(--teal); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .layout { display: grid; grid-template-columns: var(--sidebar) 1fr; min-height: 100vh; }
-  .sidebar {
-    position: sticky; top: 0; height: 100vh; overflow: auto;
-    background: #0b3d33;
-    color: #e8f6f1;
-    padding: 1.25rem 1rem 2rem;
-  }
-  .brand { padding: .25rem .5rem 1rem; border-bottom: 1px solid rgba(255,255,255,.12); margin-bottom: 1rem; }
-  .brand h1 { font-size: 1.05rem; margin: 0 0 .35rem; font-weight: 700; letter-spacing: .02em; }
-  .brand p { margin: 0; font-size: .75rem; opacity: .78; line-height: 1.4; }
-  .nav-search {
-    width: 100%; margin: 0 0 1rem;
-    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
-    color: #fff; border-radius: 8px; padding: .55rem .7rem; font-size: .82rem;
-  }
-  .nav-search::placeholder { color: rgba(255,255,255,.55); }
-  .nav-section { font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; opacity: .55; margin: .9rem .5rem .35rem; }
-  .nav a {
-    display: block; color: #dff3ec; text-decoration: none;
-    padding: .45rem .6rem; border-radius: 8px; font-size: .86rem; margin-bottom: 2px;
-  }
-  .nav a:hover, .nav a.active { background: rgba(255,255,255,.1); text-decoration: none; }
-  .nav a .tag {
-    display: inline-block; font-size: .62rem; margin-left: .35rem;
-    padding: 1px 6px; border-radius: 999px; background: rgba(255,255,255,.12); vertical-align: middle;
-  }
-  .main { padding: 1.5rem 1.75rem 4rem; max-width: 1100px; }
-  .hero {
-    background: linear-gradient(135deg, #0d6e5a 0%, #0f8a6f 55%, #1aa88a 100%);
-    color: white; border-radius: 16px; padding: 1.75rem 1.75rem 1.5rem;
-    box-shadow: var(--shadow); margin-bottom: 1.25rem;
-  }
-  .hero h2 { margin: 0 0 .5rem; font-size: 1.55rem; font-weight: 750; }
-  .hero p { margin: 0; max-width: 70ch; opacity: .93; font-size: .95rem; }
-  .meta-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
-  .pill {
-    display: inline-flex; align-items: center; gap: .35rem;
-    background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.2);
-    border-radius: 999px; padding: .28rem .7rem; font-size: .75rem;
-  }
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .9rem; margin: 1rem 0 1.5rem; }
-  .card {
-    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 1rem 1.05rem; box-shadow: var(--shadow);
-  }
-  .card h3 { margin: 0 0 .4rem; font-size: .95rem; color: var(--teal); }
-  .card p { margin: 0; font-size: .84rem; color: var(--muted); }
-  .card a.btn {
-    display: inline-block; margin-top: .75rem; background: var(--teal-soft); color: var(--teal);
-    border-radius: 8px; padding: .35rem .65rem; font-size: .78rem; font-weight: 600; text-decoration: none;
-  }
-  .card a.btn:hover { background: #d4efe6; }
-  section.block {
-    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 1.35rem 1.4rem 1.5rem; margin-bottom: 1.1rem; box-shadow: var(--shadow);
-    scroll-margin-top: 1rem;
-  }
-  section.block h2 {
-    margin: 0 0 .85rem; font-size: 1.2rem; color: var(--teal);
-    padding-bottom: .55rem; border-bottom: 2px solid var(--teal-soft);
-  }
-  section.block h3 { margin: 1.2rem 0 .5rem; font-size: 1rem; color: var(--ink); }
-  section.block h4 { margin: .9rem 0 .35rem; font-size: .92rem; color: #23453c; }
-  p, li { font-size: .9rem; }
-  .muted { color: var(--muted); }
-  .callout {
-    border-radius: 10px; padding: .85rem 1rem; margin: .9rem 0;
-    border-left: 4px solid var(--teal); background: var(--teal-soft);
-  }
-  .callout.warn { border-left-color: var(--amber); background: var(--amber-soft); }
-  .callout.danger { border-left-color: var(--red); background: var(--red-soft); }
-  .callout.info { border-left-color: var(--blue); background: var(--blue-soft); }
-  .callout strong { display: block; margin-bottom: .2rem; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
-  table {
-    width: 100%; border-collapse: collapse; font-size: .82rem; margin: .75rem 0 1rem;
-  }
-  th, td {
-    border: 1px solid var(--line); padding: .55rem .6rem; text-align: left; vertical-align: top;
-  }
-  th { background: #f0f7f4; color: #1f4a40; font-weight: 650; }
-  tr:nth-child(even) td { background: #fafcfb; }
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; }
-    .sidebar { position: relative; height: auto; }
-    .two-col { grid-template-columns: 1fr; }
-  }
-  .model-box {
-    border: 1px solid var(--line); border-radius: 10px; padding: 1rem; background: #fbfdfe;
-  }
-  .model-box.a { border-top: 4px solid var(--blue); }
-  .model-box.b { border-top: 4px solid var(--teal); }
-  .model-box h3 { margin-top: 0; color: inherit; }
-  .tier {
-    display: grid; grid-template-columns: 90px 1fr; gap: .75rem; align-items: start;
-    padding: .75rem; border-radius: 10px; margin-bottom: .55rem; border: 1px solid var(--line);
-  }
-  .tier .badge {
-    font-weight: 700; font-size: .78rem; text-align: center; padding: .45rem .3rem;
-    border-radius: 8px; color: white;
-  }
-  .t1 .badge { background: #a33a2f; }
-  .t2 .badge { background: #b36b00; }
-  .t3 .badge { background: #0d6e5a; }
-  .fast .badge { background: #1a56db; }
-  .source-list { list-style: none; padding: 0; margin: 0; }
-  .source-list li {
-    display: flex; justify-content: space-between; gap: 1rem; align-items: center;
-    padding: .65rem .2rem; border-bottom: 1px solid var(--line); font-size: .86rem;
-  }
-  .source-list li:last-child { border-bottom: 0; }
-  .chip {
-    display: inline-block; font-size: .68rem; font-weight: 650; padding: 2px 7px;
-    border-radius: 999px; background: var(--teal-soft); color: var(--teal); margin-right: .25rem;
-  }
-  .chip.eng { background: var(--blue-soft); color: var(--blue); }
-  .chip.ops { background: var(--amber-soft); color: var(--amber); }
-  .chip.res { background: #efe8ff; color: #5b3db8; }
-  figure { margin: 1rem 0; text-align: center; }
-  figure img { max-width: 100%; border-radius: 10px; border: 1px solid var(--line); background: white; }
-  figcaption { font-size: .78rem; color: var(--muted); margin-top: .45rem; }
-  .toc-mini { display: flex; flex-wrap: wrap; gap: .4rem; margin: .5rem 0 0; }
-  .toc-mini a {
-    background: rgba(255,255,255,.14); color: white; border-radius: 999px;
-    padding: .25rem .65rem; font-size: .75rem; text-decoration: none;
-  }
-  .toc-mini a:hover { background: rgba(255,255,255,.22); }
-  .hidden { display: none !important; }
-  .footer-note {
-    margin-top: 1.5rem; font-size: .78rem; color: var(--muted);
-    border-top: 1px solid var(--line); padding-top: 1rem;
-  }
-  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .84em; background: #eef4f1; padding: .1em .35em; border-radius: 4px; }
-  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; margin: 1rem 0; }
-  @media (max-width: 800px) { .kpi-row { grid-template-columns: 1fr 1fr; } }
-  .kpi {
-    background: white; border: 1px solid var(--line); border-radius: 10px; padding: .8rem;
-  }
-  .kpi .n { font-size: 1.25rem; font-weight: 750; color: var(--teal); }
-  .kpi .l { font-size: .75rem; color: var(--muted); margin-top: .15rem; }
-  details.faq {
-    border: 1px solid var(--line); border-radius: 10px; padding: .7rem .9rem; margin-bottom: .5rem; background: #fbfdfe;
-  }
-  details.faq summary { cursor: pointer; font-weight: 650; font-size: .9rem; color: #1f4a40; }
-  details.faq[open] summary { margin-bottom: .45rem; }
-  .role-path {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .7rem; margin-top: .8rem;
-  }
-  .role-path a {
-    display: block; background: white; border: 1px solid var(--line); border-radius: 10px;
-    padding: .8rem; text-decoration: none; color: inherit;
-  }
-  .role-path a:hover { border-color: var(--teal-2); box-shadow: var(--shadow); }
-  .role-path strong { display: block; color: var(--teal); margin-bottom: .25rem; font-size: .88rem; }
-  .role-path span { font-size: .8rem; color: var(--muted); }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A synthetic-data planning environment for OMW strategy, targets, interventions, and operational readiness.">
+  <title>OMW Strategy Studio</title>
+  <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-<div class="layout">
-  <aside class="sidebar">
-    <div class="brand">
-      <h1>OMW Team Hub</h1>
-      <p>HEDIS Osteoporosis Management in Women Who Had a Fracture — measure logic, risk models, outreach, and engineering in one place.</p>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">O</span>
+        <div><strong>OMW Strategy Studio</strong><small>Planning, not production</small></div>
+      </div>
+      <nav id="nav">
+        <a href="#cockpit" data-route="cockpit"><span>01</span> Strategy Cockpit</a>
+        <a href="#target" data-route="target"><span>02</span> Target Planner</a>
+        <a href="#scenarios" data-route="scenarios"><span>03</span> Scenario Lab</a>
+        <a href="#portfolio" data-route="portfolio"><span>04</span> Intervention Portfolio</a>
+        <a href="#journey" data-route="journey"><span>05</span> Measure &amp; Journey</a>
+        <a href="#decisions" data-route="decisions"><span>06</span> Decisions</a>
+        <a href="#assumptions" data-route="assumptions"><span>07</span> Assumptions</a>
+        <a href="#roadmap" data-route="roadmap"><span>08</span> Roadmap</a>
+        <a href="#safety" data-route="safety"><span>09</span> Data Safety</a>
+        <a href="knowledge.html"><span>10</span> Evidence Library ↗</a>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="status-dot"></span> Synthetic baseline active
+        <button id="resetAll" class="text-button">Restore all defaults</button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button id="menuButton" class="icon-button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+        <div>
+          <p class="eyebrow">Interactive planning environment</p>
+          <h1 id="pageTitle">Strategy Cockpit</h1>
+        </div>
+        <div class="top-actions">
+          <button id="searchButton" class="secondary-button">Search</button>
+          <button id="exportButton" class="primary-button">Export summary</button>
+        </div>
+      </header>
+
+      <div class="privacy-banner" role="note">
+        <strong>Data-safe environment</strong>
+        <span>Use synthetic or approved aggregate data only. Do not upload PHI, member-identifiable data, confidential company information, credentials, or proprietary datasets.</span>
+      </div>
+
+      <main id="main" tabindex="-1">
+        <section id="cockpit" class="page active" data-title="Strategy Cockpit">
+          <div class="page-intro">
+            <div><p class="eyebrow">Scenario control center</p><h2>Can the current strategy reach the target?</h2><p>Translate synthetic assumptions into closures, capacity, cost, risk, and a defensible next decision.</p></div>
+            <span class="synthetic-badge">Synthetic scenario</span>
+          </div>
+          <div id="cockpitKpis" class="kpi-grid"></div>
+          <div class="two-column">
+            <article class="panel feature-panel">
+              <div class="panel-heading"><div><p class="eyebrow">Planning interpretation</p><h3>Strategy outlook</h3></div><span id="outlookStatus" class="status-pill"></span></div>
+              <p id="strategyStatement" class="strategy-statement"></p>
+              <div class="progress-block"><div><span>Projected rate</span><strong id="projectedRateLabel"></strong></div><div class="progress-track"><span id="projectedRateBar"></span><i id="targetMarker"></i></div><small id="rateContext"></small></div>
+              <div class="inline-actions"><button class="primary-button route-button" data-go="target">Adjust target</button><button class="secondary-button route-button" data-go="portfolio">Tune portfolio</button></div>
+            </article>
+            <article class="panel">
+              <div class="panel-heading"><div><p class="eyebrow">Attention required</p><h3>Top strategic risks</h3></div><span id="riskCount" class="count-badge"></span></div>
+              <div id="riskList" class="risk-list"></div>
+            </article>
+          </div>
+          <div class="three-column">
+            <article class="panel compact"><p class="eyebrow">Next decision</p><h3 id="nextDecisionTitle"></h3><p id="nextDecisionMeta"></p><button class="text-button route-button" data-go="decisions">Open registry →</button></article>
+            <article class="panel compact"><p class="eyebrow">Weakest assumption</p><h3 id="weakAssumptionTitle"></h3><p id="weakAssumptionMeta"></p><button class="text-button route-button" data-go="assumptions">Review assumption →</button></article>
+            <article class="panel compact"><p class="eyebrow">Roadmap signal</p><h3 id="roadmapSignalTitle"></h3><p id="roadmapSignalMeta"></p><button class="text-button route-button" data-go="roadmap">View work →</button></article>
+          </div>
+        </section>
+
+        <section id="target" class="page" data-title="Target & Closure Planner">
+          <div class="page-intro"><div><p class="eyebrow">Release 1 planning tool</p><h2>Turn percentage ambition into operating math</h2><p>Every result is recalculated from the editable synthetic assumptions below.</p></div><span class="synthetic-badge">Synthetic defaults</span></div>
+          <div class="planner-layout">
+            <form id="targetForm" class="panel input-panel">
+              <div class="panel-heading"><div><p class="eyebrow">Planning inputs</p><h3>Target assumptions</h3></div><button type="button" id="resetTarget" class="text-button">Reset</button></div>
+              <div id="targetInputs" class="form-grid"></div>
+            </form>
+            <div>
+              <div id="targetResults" class="kpi-grid results-grid"></div>
+              <article class="panel">
+                <div class="panel-heading"><div><p class="eyebrow">Numerator ladder</p><h3>Path from current to buffered target</h3></div></div>
+                <div id="numeratorLadder" class="ladder"></div>
+                <p id="targetNarrative" class="callout"></p>
+              </article>
+            </div>
+          </div>
+          <article class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">Denominator sensitivity</p><h3>Closures needed as the denominator moves</h3></div></div>
+            <div id="sensitivityChart" class="bar-chart" role="img" aria-label="Required closures by projected denominator"></div>
+          </article>
+        </section>
+
+        <section id="scenarios" class="page" data-title="Scenario Lab">
+          <div class="page-intro"><div><p class="eyebrow">Release 2 planning tool</p><h2>Compare strategies without pretending certainty</h2><p>Select up to four synthetic scenarios. Results include confidence ranges and capacity warnings.</p></div><button id="duplicateScenario" class="secondary-button">Duplicate preferred</button></div>
+          <div id="scenarioTabs" class="scenario-tabs"></div>
+          <div class="two-column scenario-editor-row">
+            <form id="scenarioForm" class="panel input-panel"><div class="panel-heading"><div><p class="eyebrow">Selected scenario</p><h3 id="scenarioEditorTitle"></h3></div><button type="button" id="preferScenario" class="text-button">Mark preferred</button></div><div id="scenarioInputs" class="form-grid"></div></form>
+            <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Driver analysis</p><h3>What moves this result?</h3></div></div><div id="driverList" class="driver-list"></div><div id="scenarioWarning"></div></article>
+          </div>
+          <article class="panel table-panel"><div class="panel-heading"><div><p class="eyebrow">Side-by-side</p><h3>Scenario comparison</h3></div><button id="exportScenarios" class="text-button">Download CSV</button></div><div class="table-scroll"><table><thead id="scenarioHead"></thead><tbody id="scenarioBody"></tbody></table></div></article>
+        </section>
+
+        <section id="portfolio" class="page" data-title="Intervention Portfolio">
+          <div class="page-intro"><div><p class="eyebrow">Release 2 planning tool</p><h2>Build a portfolio within real-world constraints</h2><p>Synthetic effect estimates are illustrative planning values—not validated company forecasts.</p></div><span class="synthetic-badge">Illustrative effects</span></div>
+          <div class="constraint-bar panel">
+            <label>Available staff hours <input id="portfolioCapacity" type="number" min="1" step="10"></label>
+            <label>Budget <span class="input-prefix">$</span><input id="portfolioBudget" type="number" min="0" step="1000"></label>
+            <button id="recommendPortfolio" class="primary-button">Recommend balanced portfolio</button>
+          </div>
+          <div id="portfolioSummary" class="kpi-grid"></div>
+          <div class="portfolio-layout">
+            <article class="panel table-panel"><div class="panel-heading"><div><p class="eyebrow">Synthetic catalog</p><h3>Select interventions</h3></div></div><div class="table-scroll"><table><thead><tr><th scope="col">Use</th><th scope="col">Intervention</th><th scope="col">Barrier</th><th scope="col">Effect</th><th scope="col">Hours</th><th scope="col">Cost</th><th scope="col">Readiness</th></tr></thead><tbody id="interventionBody"></tbody></table></div></article>
+            <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Impact vs. effort</p><h3>Portfolio position</h3></div></div><div id="impactMatrix" class="impact-matrix" role="img" aria-label="Impact versus effort matrix"></div><div id="portfolioWarnings"></div></article>
+          </div>
+        </section>
+
+        <section id="journey" class="page" data-title="Measure & Journey">
+          <div class="page-intro"><div><p class="eyebrow">Operational clock</p><h2>Find where the pathway leaks</h2><p>Follow a synthetic cohort from fracture signal to evidence received, closure, or expiry.</p></div><span class="synthetic-badge">Synthetic funnel</span></div>
+          <div class="two-column">
+            <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Journey funnel</p><h3>Stage conversion</h3></div><select id="funnelScenario" aria-label="Funnel scenario"></select></div><div id="funnel" class="funnel"></div></article>
+            <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Largest leakage</p><h3 id="leakageTitle"></h3></div></div><p id="leakageText" class="strategy-statement"></p><div id="failureCauses" class="risk-list"></div><button class="primary-button route-button" data-go="portfolio">Match interventions</button></article>
+          </div>
+          <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Days remaining</p><h3>Opportunity window distribution</h3></div></div><div id="timeBands" class="time-bands"></div></article>
+        </section>
+
+        <section id="decisions" class="page" data-title="Decision Registry">
+          <div class="page-intro"><div><p class="eyebrow">Traceable governance</p><h2>Turn recommendations into explicit decisions</h2><p>Every seeded record is fictional and can be edited locally for planning.</p></div><button id="addDecision" class="primary-button">Add decision</button></div>
+          <div class="filter-row"><label>Status <select id="decisionFilter"><option value="all">All statuses</option></select></label><label class="search-field">Search <input id="decisionSearch" type="search" placeholder="Title, owner, rationale…"></label></div>
+          <div id="decisionList" class="registry-list"></div>
+        </section>
+
+        <section id="assumptions" class="page" data-title="Assumption Ledger">
+          <div class="page-intro"><div><p class="eyebrow">Make uncertainty visible</p><h2>Expose what the plan depends on</h2><p>Low-confidence and high-impact inputs surface first. Editing an assumption updates related planning outputs.</p></div><button id="exportAssumptions" class="secondary-button">Download JSON</button></div>
+          <div class="filter-row"><label>Category <select id="assumptionFilter"><option value="all">All categories</option></select></label><label class="search-field">Search <input id="assumptionSearch" type="search" placeholder="Name, source, owner…"></label></div>
+          <article class="panel table-panel"><div class="table-scroll"><table><thead><tr><th>Assumption</th><th>Category</th><th>Value</th><th>Range</th><th>Confidence</th><th>Impact</th><th>Review</th></tr></thead><tbody id="assumptionBody"></tbody></table></div></article>
+        </section>
+
+        <section id="roadmap" class="page" data-title="Roadmap">
+          <div class="page-intro"><div><p class="eyebrow">From strategy to work</p><h2>Sequence the next 90 days</h2><p>A synthetic implementation roadmap linked to decisions, risks, and planning scenarios.</p></div><div class="view-toggle"><button class="active" data-roadmap-view="board">Board</button><button data-roadmap-view="table">Table</button></div></div>
+          <div id="roadmapBoard" class="kanban"></div>
+          <article id="roadmapTablePanel" class="panel table-panel hidden"><div class="table-scroll"><table><thead><tr><th>Initiative</th><th>Workstream</th><th>Status</th><th>Priority</th><th>Target</th><th>Dependency</th></tr></thead><tbody id="roadmapBody"></tbody></table></div></article>
+        </section>
+
+        <section id="safety" class="page" data-title="Data Safety">
+          <div class="page-intro"><div><p class="eyebrow">Non-negotiable boundary</p><h2>Useful without company data</h2><p>The public repository contains public knowledge, fictional demonstrations, generic assumptions, and blank templates only.</p></div><span class="safe-badge">Local-only architecture</span></div>
+          <div class="four-layers">
+            <article><span>1</span><h3>Public knowledge</h3><p>Measure concepts, evidence, strategy, and governance.</p></article>
+            <article><span>2</span><h3>Synthetic demonstration</h3><p>Fictional populations, effects, costs, and journeys.</p></article>
+            <article><span>3</span><h3>Configurable planning</h3><p>User-editable assumptions processed in the browser.</p></article>
+            <article class="private-layer"><span>4</span><h3>Private implementation</h3><p>Real company data remains outside this repository and application.</p></article>
+          </div>
+          <div class="two-column">
+            <article class="panel"><h3>Permitted here</h3><ul class="check-list"><li>Public measure summaries</li><li>Clearly synthetic records</li><li>Approved aggregate values</li><li>Blank configuration templates</li><li>Locally downloaded planning outputs</li></ul></article>
+            <article class="panel danger-panel"><h3>Never place here</h3><ul class="x-list"><li>PHI or member-identifiable data</li><li>Provider-identifiable performance</li><li>Proprietary rates, contracts, or costs</li><li>Credentials, internal URLs, or secrets</li><li>Internal system exports or screenshots</li></ul></article>
+          </div>
+          <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Architecture verification</p><h3>Privacy controls in this release</h3></div></div><div class="control-grid"><div><strong>No network calls</strong><span>Static assets and local JSON only</span></div><div><strong>No telemetry</strong><span>No analytics or tracking code</span></div><div><strong>No persistence</strong><span>Changes live only in the open tab</span></div><div><strong>Labeled exports</strong><span>Synthetic/user-entered footer included</span></div></div></article>
+        </section>
+      </main>
     </div>
-    <input class="nav-search" id="navSearch" type="search" placeholder="Filter sections…" aria-label="Filter sections" />
-    <nav class="nav" id="sideNav">
-      <div class="nav-section">Start here</div>
-      <a href="#overview">Overview</a>
-      <a href="#start-by-role">Start by role</a>
-      <a href="#key-takeaways">Key takeaways</a>
+  </div>
 
-      <div class="nav-section">The measure</div>
-      <a href="#measure">Measure specification</a>
-      <a href="#failure-modes">Operational failure modes</a>
-      <a href="#timeline">Timeline &amp; clock</a>
-
-      <div class="nav-section">Strategy &amp; models</div>
-      <a href="#two-models">Two models, not one</a>
-      <a href="#model-a">Model A — fracture risk</a>
-      <a href="#model-b">Model B — OMW failure</a>
-      <a href="#features">Feature catalog</a>
-      <a href="#evidence">Evidence &amp; prediction ceiling</a>
-
-      <div class="nav-section">Closing the gap</div>
-      <a href="#outreach">Outreach model</a>
-      <a href="#tiers">Risk tiers &amp; interventions</a>
-      <a href="#tactics">Evidence-based tactics</a>
-      <a href="#metrics">Success metrics</a>
-
-      <div class="nav-section">Engineering &amp; ops</div>
-      <a href="#architecture">Two-system architecture</a>
-      <a href="#pre-omw">PRE_OMW_RISK_SCORE</a>
-      <a href="#strategic-risks">Strategic risks &amp; opportunities</a>
-
-      <div class="nav-section">Tools &amp; sources</div>
-      <a href="#deck">Strategy deck</a>
-      <a href="#demos">Interactive demos</a>
-      <a href="#library">Source library</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-  </aside>
-
-  <main class="main">
-    <header class="hero" id="overview">
-      <h2>OMW: from fracture claim to closed gap</h2>
-      <p>
-        This hub consolidates your OMW research, measure logic, dual-axis risk scoring ideas,
-        outreach design, and engineering specs into one navigable package for the team.
-        Use it as the shared mental model for Stars quality, clinical rules, and care outreach.
-      </p>
-      <div class="meta-row">
-        <span class="pill">HEDIS · Medicare Stars</span>
-        <span class="pill">Women 67–85 after qualifying fracture</span>
-        <span class="pill">BMD <em>or</em> osteoporosis Rx within 180 days</span>
-        <span class="pill">Package assembled Jul 2026</span>
-      </div>
-      <div class="toc-mini">
-        <a href="#measure">Measure</a>
-        <a href="#two-models">Models</a>
-        <a href="#outreach">Outreach</a>
-        <a href="#pre-omw">Pre-denom score</a>
-        <a href="#demos">Demos</a>
-        <a href="#library">Sources</a>
-      </div>
-    </header>
-
-    <div class="kpi-row">
-      <div class="kpi"><div class="n">180 days</div><div class="l">Numerator window after index fracture (IESD)</div></div>
-      <div class="kpi"><div class="n">2 models</div><div class="l">Fracture risk (A) vs OMW-failure risk (B)</div></div>
-      <div class="kpi"><div class="n">~1 in 5</div><div class="l">Typical national post-fracture management rate</div></div>
-      <div class="kpi"><div class="n">FLS first</div><div class="l">Coordinator-led pathways show strongest evidence</div></div>
-    </div>
-
-    <section class="block" id="start-by-role">
-      <h2>Start by role</h2>
-      <p class="muted">Pick the path that matches how you’ll use this package.</p>
-      <div class="role-path">
-        <a href="#key-takeaways"><strong>Leadership / Stars strategy</strong><span>Key takeaways → strategic risks → success metrics</span></a>
-        <a href="#measure"><strong>Quality / measure ops</strong><span>Measure spec → failure modes → timeline</span></a>
-        <a href="#two-models"><strong>Analytics / data science</strong><span>Two models → features → evidence ceiling</span></a>
-        <a href="#outreach"><strong>Care management / outreach</strong><span>Tiers → barrier mapping → tactics</span></a>
-        <a href="#architecture"><strong>Engineering / rules engine</strong><span>Architecture → PRE_OMW token → demos</span></a>
-      </div>
-    </section>
-
-    <section class="block" id="key-takeaways">
-      <h2>Key takeaways</h2>
-      <ol>
-        <li><strong>Fracture risk ≠ OMW failure risk.</strong> FRAX/Garvan/QFracture answer “who will fracture.” OMW is failed by women who <em>already</em> fractured and then miss BMD or treatment in 180 days. Those are two different models on two different populations.</li>
-        <li><strong>The clock starts when the fracture lands.</strong> Denominator entry (qualifying fracture in the intake period) starts a 180-day window. Scoring and outreach must run as soon as the episode is known—ideally at ADT, not after the full claims picture arrives.</li>
-        <li><strong>Complexity rarely buys AUC; calibration and net benefit do.</strong> Discrimination for fracture tools is typically ~0.65–0.80. ML does not consistently beat well-specified Cox/logistic models. Optimize for temporal validation, calibration, and top-K outreach utility.</li>
-        <li><strong>FLS-style, multi-component outreach wins.</strong> Single reminders underperform. Coordinator-led Fracture Liaison Service pathways and multi-component QI bundles are the strongest evidence base for closing gaps.</li>
-        <li><strong>Fairness is operational, not cosmetic.</strong> OMW failure correlates with race, dual eligibility, and deprivation. Use those signals to direct <em>more</em> barrier-removing outreach—never to ration care.</li>
-        <li><strong>Engineering risk is adoption, not math.</strong> A pre-denominator score that Stars doesn’t surface at ADT time produces no ROI. Enrichment must be in the workflow, not a lookup table nobody opens.</li>
-      </ol>
-      <div class="callout warn">
-        <strong>Spec version note</strong>
-        Measure logic in the research package is anchored on HEDIS MY2024 summaries; engineering token work references MY2026 drafts. Always confirm code sets, frailty/advanced-illness windows, and exclusions against the current NCQA Technical Specifications and value sets before production.
-      </div>
-    </section>
-
-    <!-- MEASURE -->
-    <section class="block" id="measure">
-      <h2>Measure specification (OMW)</h2>
-      <p>
-        <strong>Osteoporosis Management in Women Who Had a Fracture</strong> is an NCQA HEDIS measure that feeds Medicare Star Ratings.
-        It is the percentage of women ages <strong>67–85</strong> who sustained a qualifying fracture and then received
-        <strong>either a bone mineral density (BMD) test or osteoporosis medication</strong> within <strong>180 days</strong> of the index episode.
-      </p>
-
-      <h3>Denominator (eligible population)</h3>
-      <ul>
-        <li><strong>Age:</strong> 67–85 as of Dec 31 of the measurement year</li>
-        <li><strong>Sex:</strong> administrative female at any point in history</li>
-        <li><strong>Enrollment:</strong> continuous from 365 days before the episode date through 180 days after (Medicare medical + pharmacy)</li>
-        <li><strong>Qualifying fracture in the intake period</strong> via outpatient visit, ED visit, or inpatient discharge with fracture on the claim</li>
-      </ul>
-      <p><strong>Intake period:</strong> July 1 of the year prior to the MY through June 30 of the MY. Captures the member’s <em>first</em> qualifying fracture; the 6-month numerator clock can still run past June 30.</p>
-
-      <table>
-        <thead><tr><th>Term</th><th>Definition</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Episode date</strong></td><td>OP/ED: date of service. Inpatient: <strong>discharge</strong> date (last admission if transfer chain).</td></tr>
-          <tr><td><strong>IESD</strong></td><td>Index Episode Start Date — earliest episode date in the intake period meeting all EP criteria. Numerator window measured from IESD.</td></tr>
-        </tbody>
-      </table>
-      <div class="callout info">
-        <strong>Operational nuance</strong>
-        For hospitalized hip fracture, the 180-day clock starts at discharge—not admission or surgery date. That is why discharge planning is a high-leverage intervention point.
-      </div>
-
-      <h3>Numerator (gap closure)</h3>
-      <p>Compliant if, on the IESD or within 180 days after it, the member has <strong>either</strong>:</p>
-      <ul>
-        <li>A <strong>BMD test</strong> in any setting (e.g., central DXA), <em>or</em></li>
-        <li><strong>Osteoporosis medication</strong> — dispensed prescription or administered/infused agent</li>
-      </ul>
-      <p class="muted">Either action closes the gap; both are not required. A normal BMD still closes the measure (evaluation counts).</p>
-      <p><span class="chip">Illustrative codes only</span> BMD CPT families include 76977, 77078, 77080, 77081, 77085, 77086. Therapy includes bisphosphonates, denosumab, raloxifene, anabolics, etc., including HCPCS J-codes for infused/injected agents. Always use current NCQA value sets.</p>
-
-      <h3>Exclusions (remove from denominator)</h3>
-      <div class="two-col">
-        <div>
-          <h4>Prior management</h4>
-          <ul>
-            <li>BMD within <strong>24 months before</strong> episode</li>
-            <li>Osteoporosis therapy / dispensed Rx within <strong>12 months before</strong> episode</li>
-          </ul>
-          <h4>Non-qualifying sites</h4>
-          <ul>
-            <li>Finger, toe, face, or skull fractures</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Advanced illness / frailty / end-of-life</h4>
-          <ul>
-            <li>Hospice or palliative care</li>
-            <li>Ages 67–80 with advanced illness <em>and</em> frailty</li>
-            <li>Ages 81+ with frailty</li>
-            <li>I-SNP enrollment or long-term institutional residence</li>
-          </ul>
-        </div>
-      </div>
-      <div class="callout">
-        <strong>Stale prior care is not protective</strong>
-        A BMD older than 24 months or therapy lapsed beyond 12 months does <em>not</em> exclude the member. Teams often misread “she already had a DXA / is on treatment” and miss true gaps.
-      </div>
-      <p><a class="card btn" href="sources/omw_measure_brief.md">Open full measure brief (markdown)</a>
-         &nbsp; <a class="card btn" href="sources/OMW_strategy_report.md">Open full strategy report</a></p>
-    </section>
-
-    <section class="block" id="failure-modes">
-      <h2>Operational failure modes</h2>
-      <p>These are the recurring, addressable reasons eligible women fail the measure—each is a lever for modeling and outreach.</p>
-      <ol>
-        <li><strong>No owner after the fracture.</strong> Wrist/vertebral fractures treated in ED/urgent care generate the claim, but no one owns the osteoporosis workup. Ortho/ED ↔ PCP fragmentation is the dominant pattern.</li>
-        <li><strong>180-day window quietly closes.</strong> Fracture healing, rehab, and deferred follow-up consume the clock—especially for late intake-period fractures.</li>
-        <li><strong>Inpatient hip discharged without a plan.</strong> Focus on surgical recovery; therapy not started before discharge and not picked up outpatient.</li>
-        <li><strong>Silent vertebral fractures.</strong> Incidental imaging findings under-coded or not communicated.</li>
-        <li><strong>Coding false positives.</strong> Old/healed or “history of” fractures coded as acute pull members into the denominator. Removal usually requires a <strong>corrected claim</strong>—not a soft exclusion.</li>
-        <li><strong>Stale management misread as exclusion.</strong> Teams assume prior DXA/therapy still protects when lookbacks have expired.</li>
-        <li><strong>Access &amp; adherence barriers.</strong> Transport to DXA, cost of infusions, bisphosphonate hesitancy, low literacy convert orders into unfilled gaps.</li>
-      </ol>
-    </section>
-
-    <section class="block" id="timeline">
-      <h2>Timeline &amp; clock</h2>
-      <table>
-        <thead><tr><th>When</th><th>What happens</th><th>Implication</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>Before any fracture</td>
-            <td>Model A scores broader eligible women for fracture risk; proactive BMD/treatment keeps members out of OMW denominator</td>
-            <td>Primary prevention lane</td>
-          </tr>
-          <tr>
-            <td>Qualifying fracture (ADT or claim)</td>
-            <td>Denominator entry; IESD set; 180-day numerator window opens</td>
-            <td>Score Model B / enrich PRE_OMW immediately</td>
-          </tr>
-          <tr>
-            <td>Days 0–60</td>
-            <td>High-leverage outreach; aim for BMD scheduled</td>
-            <td>Leading indicator: BMD scheduled by day 60</td>
-          </tr>
-          <tr>
-            <td>Days 60–90</td>
-            <td>Escalate open gaps; medication initiation target</td>
-            <td>Leading indicator: Rx by day 90</td>
-          </tr>
-          <tr>
-            <td>Day ~90 checkpoint</td>
-            <td>Re-tier; move Tier 3 open gaps to Tier 2</td>
-            <td>Capacity-aware escalation</td>
-          </tr>
-          <tr>
-            <td>Day 180</td>
-            <td>Window closes; compliant or fail label final for measure logic</td>
-            <td>Labels feed next model training cycle</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- MODELS -->
-    <section class="block" id="two-models">
-      <h2>Two models, not one</h2>
-      <p>
-        The central design decision across your materials: <strong>“score women at risk of fracture”</strong> and
-        <strong>“score women likely to fail OMW”</strong> are different prediction problems. Conflating them ranks by bone risk when the plan needs probability of an open, closable care gap under a 180-day clock.
-      </p>
-      <div class="two-col">
-        <div class="model-box a" id="model-a">
-          <h3>Model A — Fracture-risk / screening</h3>
-          <p><strong>Population:</strong> broader eligible female membership (esp. 67–85) without a recent fracture.</p>
-          <p><strong>Target:</strong> incident major osteoporotic or hip fracture (e.g., 2-year horizon).</p>
-          <p><strong>Purpose:</strong> primary prevention and pre-emptive BMD/treatment so osteoporosis is managed <em>before</em> a fracture starts the OMW clock.</p>
-          <p><strong>Ceiling:</strong> C-index roughly 0.70–0.80 (hip better than composite).</p>
-          <p><strong>Feature lean:</strong> age, prior fracture count, falls, glucocorticoids, BMI, T-score, CVD — FRAX-style predictors computable from plan data where possible.</p>
-        </div>
-        <div class="model-box b" id="model-b">
-          <h3>Model B — OMW-failure (operational core)</h3>
-          <p><strong>Population:</strong> true OMW denominator — women 67–85 with qualifying fragility fracture, continuously enrolled, not excluded.</p>
-          <p><strong>Target:</strong> fail = no BMD and no osteoporosis Rx by day 180 post-episode.</p>
-          <p><strong>Purpose:</strong> rank the live gap list so finite coordinator capacity hits women least likely to close on their own.</p>
-          <p><strong>Evidence anchor:</strong> Boytsov 2017 — OMW failure patterned by patient, geography, and provider factors in a health-plan cohort.</p>
-          <p><strong>Feature lean:</strong> access, engagement, provider panel OMW rate, DXA distance, deprivation, adherence history, setting of care.</p>
-        </div>
-      </div>
-      <div class="callout">
-        <strong>Scoring-time rule (Model B)</strong>
-        Score at (or within days of) the episode date using only information available then—no post-episode leakage. The 180-day outcome is what you predict; nothing after the episode may be a feature.
-      </div>
-      <h3>Algorithm stance</h3>
-      <ol>
-        <li><strong>Baseline:</strong> penalized logistic (B) and Cox (A) — transparent, auditable, often competitive.</li>
-        <li><strong>Primary candidate:</strong> gradient-boosted trees with monotonic constraints on clinically directional features.</li>
-        <li><strong>Escalate complexity only if</strong> it beats trees on temporal/external validation <em>and</em> decision-curve net benefit at the capacity threshold—not on CV AUC alone.</li>
-      </ol>
-      <p><a href="sources/model_design_blueprint.md">Open predictive model blueprint</a></p>
-    </section>
-
-    <section class="block" id="features">
-      <h2>Feature catalog (29 features · 8 domains)</h2>
-      <p class="muted">Everything intended to be computable from data a plan already holds: enrollment, medical/pharmacy claims, provider directory, address-derived SDOH. Tags: <span class="chip">A</span> fracture model · <span class="chip">B</span> failure model · <span class="chip">Both</span></p>
-      <div style="overflow:auto">
-        <table id="featureTable">
-          <thead>
-            <tr><th>Domain</th><th>Feature</th><th>Model</th><th>Why it matters</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <p><a href="sources/feature_catalog.csv">Download feature_catalog.csv</a></p>
-    </section>
-
-    <section class="block" id="evidence">
-      <h2>Evidence &amp; prediction ceiling</h2>
-      <p>
-        Fracture-risk tools (FRAX, Garvan, QFracture) and ML variants show <strong>moderate discrimination</strong> and fragile calibration across populations.
-        Head-to-head work finds no single dominant tool; hip fracture is easier to predict than broader osteoporotic endpoints.
-        A Swiss registry study with UK Biobank external validation found ML survival models did not consistently beat a well-specified Cox model (Lehmann 2024).
-      </p>
-      <figure>
-        <img src="figures/prediction_models_performance.png" alt="Reported discrimination of fracture-risk models" />
-        <figcaption>Reported discrimination of published fracture-risk models. Traditional clinical tools vs ML; moderate performance across the board.</figcaption>
-      </figure>
-      <div style="overflow:auto">
-        <table id="modelsTable">
-          <thead>
-            <tr><th>Model</th><th>Family</th><th>Discrimination</th><th>Validation</th><th>Key ref</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <p><a href="sources/prediction_models_comparison.csv">Download prediction_models_comparison.csv</a>
-         · <a href="sources/literature_corpus.csv">Literature corpus (49 sources)</a></p>
-    </section>
-
-    <!-- OUTREACH -->
-    <section class="block" id="outreach">
-      <h2>Clinical outreach model</h2>
-      <p>
-        The outreach model turns Model B failure scores into action inside the 180-day window.
-        Operating principle from the evidence: the strongest strategy is a coordinated, FLS-style pathway (Wu 2018), and
-        multi-component interventions beat single-component ones (Nayak 2018, 43 RCTs). The model does not choose
-        <em>whether</em> to intervene multi-modally—it always does. It chooses <strong>intensity</strong> and the
-        <strong>lead barrier-specific tactic</strong>.
-      </p>
-      <h3>Workflow</h3>
-      <ol>
-        <li><strong>Identify (continuous)</strong> — claims + pharmacy + imaging/NLP case-finding; apply measure exclusions.</li>
-        <li><strong>Score &amp; tier (daily)</strong> — Model B + time-to-deadline + dominant barrier.</li>
-        <li><strong>Assign &amp; act</strong> — Tier 1 coordinator, Tier 2 bundle, Tier 3 light touch, or hip fast-track. Provider and member components fire together.</li>
-        <li><strong>Track to closure</strong> — monitor BMD claim or osteoporosis dispense; re-score mid-window; escalate open gaps.</li>
-        <li><strong>Close or document</strong> — numerator met, exclusion, or disenrollment per spec.</li>
-        <li><strong>Feed back</strong> — outcomes become next training labels and provider panel-rate features (closed learning loop).</li>
-      </ol>
-      <p><a href="sources/outreach_model_design.md">Open outreach model design</a></p>
-    </section>
-
-    <section class="block" id="tiers">
-      <h2>Risk tiers &amp; intervention mapping</h2>
-      <p class="muted">Tier cut-points are set by outreach <em>capacity</em> (top-K operating point), not an abstract probability threshold.</p>
-
-      <div class="tier t1">
-        <div class="badge">Tier 1</div>
-        <div>
-          <strong>High failure risk — intensive / FLS-equivalent</strong>
-          <p class="muted" style="margin:.25rem 0 0">Named care coordinator, active BMD scheduling, provider engagement, barrier removal. Typical drivers: no PCP, long DXA distance, high deprivation, low adherence, OP/ED fracture with no natural follow-up.</p>
-        </div>
-      </div>
-      <div class="tier t2">
-        <div class="badge">Tier 2</div>
-        <div>
-          <strong>Moderate failure risk — structured multi-component</strong>
-          <p class="muted" style="margin:.25rem 0 0">Provider alert + patient outreach + scheduling assist. Bundled but less labor-intensive than full FLS.</p>
-        </div>
-      </div>
-      <div class="tier t3">
-        <div class="badge">Tier 3</div>
-        <div>
-          <strong>Low failure risk — light-touch / monitoring</strong>
-          <p class="muted" style="margin:.25rem 0 0">Single reminder + passive monitoring. Escalate to Tier 2 if still open at ~day 90.</p>
-        </div>
-      </div>
-      <div class="tier fast">
-        <div class="badge">Fast-track</div>
-        <div>
-          <strong>Hip / inpatient override</strong>
-          <p class="muted" style="margin:.25rem 0 0">Any qualifying hip fracture during admission routes to in-hospital treatment initiation regardless of score (Kuiper 2018). Best single opportunity to close the gap.</p>
-        </div>
-      </div>
-
-      <h3>Barrier → lead intervention</h3>
-      <table>
-        <thead><tr><th>Dominant barrier (from features)</th><th>Lead intervention</th></tr></thead>
-        <tbody>
-          <tr><td>No attributed PCP / no usual source of care</td><td>Assign/connect to PCP; coordinator owns scheduling end-to-end</td></tr>
-          <tr><td>Long distance / no nearby DXA</td><td>Mobile DXA, telehealth osteoporosis visit, or pharmacy-based initiation</td></tr>
-          <tr><td>Inpatient hip fracture</td><td>In-hospital treatment initiation before discharge</td></tr>
-          <tr><td>Low medication-adherence history</td><td>Pharmacist counseling + simplified regimen + refill support</td></tr>
-          <tr><td>Provider with low panel OMW rate</td><td>Provider education, order-set prompts, panel gap reports</td></tr>
-          <tr><td>Silent / under-coded vertebral fracture</td><td>VFA / imaging review to confirm and prompt treatment</td></tr>
-          <tr><td>High deprivation / dual-eligible</td><td>SDOH navigation, transportation, prioritized coordinator time</td></tr>
-        </tbody>
-      </table>
-      <div class="callout">
-        <strong>Reciprocal design (fairness)</strong>
-        High failure scores often encode <em>why</em> the gap will stay open. Pair score with barrier-specific help so the model does not become “whom to abandon.”
-      </div>
-    </section>
-
-    <section class="block" id="tactics">
-      <h2>Evidence-based tactics (ranked)</h2>
-      <figure>
-        <img src="figures/outreach_effect_sizes.png" alt="Gap-closure strategies by evidence strength and impact" />
-        <figcaption>Gap-closure strategies ranked by evidence strength and reported impact on post-fracture testing/treatment.</figcaption>
-      </figure>
-      <div style="overflow:auto">
-        <table id="tacticsTable">
-          <thead>
-            <tr><th>Tactic</th><th>Evidence</th><th>Effect (summary)</th><th>HEDIS relevance</th><th>Ref</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <p><a href="sources/outreach_tactics.csv">Download outreach_tactics.csv</a></p>
-    </section>
-
-    <section class="block" id="metrics">
-      <h2>Success metrics</h2>
-      <div class="two-col">
-        <div>
-          <h3>Primary</h3>
-          <ul>
-            <li>OMW rate (numerator / denominator) overall</li>
-            <li><strong>Same rate within subgroups</strong> (race, dual status, rurality, deprivation)—not average-only improvement</li>
-          </ul>
-          <h3>Operational</h3>
-          <ul>
-            <li>Top-K list precision (worked members who would have failed without contact)</li>
-            <li>Coordinator contact rate</li>
-            <li>Time from episode → closure</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Reach equity</h3>
-          <ul>
-            <li>Contact and closure rates by race, dual, rurality, ADI</li>
-            <li>Intensive pathway reach for historically failing groups</li>
-          </ul>
-          <h3>Leading indicators</h3>
-          <ul>
-            <li>BMD scheduled by day 60</li>
-            <li>Medication initiated by day 90</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ENGINEERING -->
-    <section class="block" id="architecture">
-      <h2>Two-system architecture (engine ↔ Stars)</h2>
-      <p>
-        Your engineering specs describe a structural peculiarity of OMW: the denominator is event-triggered.
-        The clinical rules engine maintains a large, relatively stable <strong>pre-denominator alert pool</strong> (OMW-C):
-        women 67–85 who would be eligible <em>if</em> a fracture occurred (no recent BMD/drug exclusions, no hospice/frailty, etc.).
-        The Stars team holds that pool but activates outreach when <strong>their ADT feed</strong> shows a fracture and cross-references the pool.
-      </p>
-      <table>
-        <thead><tr><th>Rules engine</th><th>Stars intervention team</th><th>The gap (root cause)</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>Evaluates enrolled females 67–85; applies pre-denom exclusions; fires standing OMW-C alerts; pre-computes risk scores</td>
-            <td>Holds alert pool; monitors own ADT; launches intervention when ADT + pool match; prefers to own ADT activation</td>
-            <td>Non-claims ADT outpaces claims-based BMD exclusion. BMD with service date pre-fracture but receipt date post-intervention → retroactive disqualification after outreach cost is spent</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="callout danger">
-        <strong>Sequencing mismatch</strong>
-        Stars acts when ADT fires; full claims picture (especially BMD professional claims) may arrive days–weeks later. Scoring and real-time exclusion refresh exist to reduce wasted interventions and prioritize true gaps.
-      </div>
-    </section>
-
-    <section class="block" id="pre-omw">
-      <h2>PRE_OMW_RISK_SCORE (pre-denominator enrichment)</h2>
-      <p>
-        Token <code>PRE_OMW_RISK_SCORE</code> is a <strong>dual-axis weighted score</strong> pre-computed for every member in the engine alert pool
-        <em>before</em> any ADT fires. It does <strong>not</strong> trigger outreach. It enriches the alert when Stars’ ADT gate opens
-        so the team knows how confidently and urgently to respond—without re-deriving scores at trigger time.
-      </p>
-      <div class="two-col">
-        <div class="model-box a">
-          <h3>FRAC — Fracture risk axis</h3>
-          <p>Probability this member will have an osteoporotic fracture in the near term (pre-event).</p>
-        </div>
-        <div class="model-box b">
-          <h3>N-CMP — Non-compliance risk axis</h3>
-          <p>Probability that if she fractures, she will not have BMD or osteoporosis therapy within the measure window.</p>
-        </div>
-      </div>
-      <p style="margin-top:1rem"><strong>DUAL_HIGH</strong> (high on both axes independently) = intersection of greatest fracture likelihood and greatest non-compliance likelihood—highest-confidence outreach targets when ADT fires. Members with signals of likely self-resolution (e.g., older BMD history suggesting prior engagement) can be deprioritized or held briefly.</p>
-      <h3>Design principles from the token spec</h3>
-      <ul>
-        <li>Exclusion pre-filter before scoring (hospice, advanced illness, frailty, LTC, active OMW drug 12 mo, BMD within 730 days of run)</li>
-        <li>Monthly batch refresh of scores into a lookup table; enrichment layer appends score at ADT cross-reference</li>
-        <li>Pharmacy claims are fast (24–48h); BMD professional claims are slow — this asymmetry drives the sequencing problem</li>
-        <li>Proposed mitigation stack: real-time exclusion refresh at ADT + hold-window protocol for medium/lower N-CMP</li>
-      </ul>
-      <p>
-        <a href="specs/PRE_OMW_RISK_SCORE_Spec_v1.1.docx">PRE_OMW_RISK_SCORE Spec v1.1 (docx)</a> ·
-        <a href="specs/PreDenom_Token_Spec.docx">PreDenom Token Spec (docx)</a> ·
-        <a href="specs/HEDIS_OMW_Scoring_Model.docx">HEDIS OMW Scoring Model (docx)</a> ·
-        <a href="specs/MultiModel Design Brief.docx">MultiModel Design Brief (docx)</a>
-      </p>
-    </section>
-
-    <section class="block" id="strategic-risks">
-      <h2>Strategic risks &amp; opportunities</h2>
-      <p class="muted">From the devil’s-advocate analysis of the pre-denominator scoring layer—each risk paired with a concrete win if addressed.</p>
-      <table>
-        <thead><tr><th>#</th><th>Problem</th><th>Risk if unaddressed</th><th>Opportunity</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Scoring weights unvalidated on your population</td>
-            <td>Model dismissed after year one if conversion ≈ flat outreach</td>
-            <td>Retrospective validation on 2–3 prior OMW years; calibrate FRAC/N-CMP weights &amp; DUAL_HIGH thresholds before go-live</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Two-system architecture is fragile—Stars may ignore the score</td>
-            <td>Lookup table nobody queries; no behavioral change</td>
-            <td>Flip dependency: engine delivers enriched alert into the workflow (capacity argument, not “use our score”)</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>BMD retroactive disqualification not fully solved by scoring</td>
-            <td>DUAL_HIGH washouts erode trust</td>
-            <td>Real-time exclusion refresh at ADT + 7–14 day hold window for medium/lower N-CMP</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Uneven signal quality across data sources</td>
-            <td>Month-to-month tier churn confuses care managers</td>
-            <td>Source confidence metadata on every score; feed quality loop back to data owners</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Two-system design hardening into permanent infrastructure</td>
-            <td>Duplicate logic / divergent conclusions in EPIC-FHIR future</td>
-            <td>Use validated score as proof point to reopen architecture at EPIC onboarding</td>
-          </tr>
-        </tbody>
-      </table>
-      <p><a href="specs/OMW_Risk_Analysis_Strategic_Opportunities.docx">Open full strategic risk analysis (docx)</a></p>
-    </section>
-
-    <!-- TOOLS -->
-    <section class="block" id="deck">
-      <h2>Strategy deck (gap closing)</h2>
-      <p class="muted">Shareable PowerPoint for team strategy discussions — five focus strategies, tiers, barrier mapping, and a phased roadmap.</p>
-      <div class="card-grid">
-        <div class="card">
-          <h3>OMW Gap Closing Strategy</h3>
-          <p>14 slides: problem framing, evidence hierarchy, focus portfolio, operating rhythm, metrics &amp; decisions.</p>
-          <a class="btn" href="OMW_Gap_Closing_Strategy.pptx">Open PowerPoint</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="demos">
-      <h2>Interactive demos</h2>
-      <p class="muted">Open these HTML prototypes in a browser (works offline from this folder).</p>
-      <div class="card-grid">
-        <div class="card">
-          <h3>OMW Intelligence Layer</h3>
-          <p>Concept UI for the scoring / intelligence layer over OMW alerts.</p>
-          <a class="btn" href="demos/omw_intelligence_layer.html" target="_blank" rel="noopener">Open demo</a>
-        </div>
-        <div class="card">
-          <h3>OMW What-If</h3>
-          <p>Scenario exploration for OMW intervention and scoring assumptions.</p>
-          <a class="btn" href="demos/omw_whatif.html" target="_blank" rel="noopener">Open demo</a>
-        </div>
-        <div class="card">
-          <h3>OMW Triage Demo</h3>
-          <p>Triage-oriented prototype for prioritizing post-fracture outreach.</p>
-          <a class="btn" href="demos/OMW_Triage_Demo.html" target="_blank" rel="noopener">Open demo</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="library">
-      <h2>Source library</h2>
-      <p>Original materials packaged with this hub. Share the whole <code>OMW Team Hub</code> folder (or zip it) so relative links keep working.</p>
-
-      <h3><span class="chip res">Research</span> Strategy &amp; evidence</h3>
-      <ul class="source-list">
-        <li><span>OMW strategy report (combined evidence + design)</span><a href="sources/OMW_strategy_report.md">OMW_strategy_report.md</a></li>
-        <li><span>Measure specification brief</span><a href="sources/omw_measure_brief.md">omw_measure_brief.md</a></li>
-        <li><span>Predictive model design blueprint</span><a href="sources/model_design_blueprint.md">model_design_blueprint.md</a></li>
-        <li><span>Clinical outreach model design</span><a href="sources/outreach_model_design.md">outreach_model_design.md</a></li>
-        <li><span>Feature catalog (CSV)</span><a href="sources/feature_catalog.csv">feature_catalog.csv</a></li>
-        <li><span>Outreach tactics (CSV)</span><a href="sources/outreach_tactics.csv">outreach_tactics.csv</a></li>
-        <li><span>Prediction models comparison (CSV)</span><a href="sources/prediction_models_comparison.csv">prediction_models_comparison.csv</a></li>
-        <li><span>Literature corpus — 49 verified sources (CSV)</span><a href="sources/literature_corpus.csv">literature_corpus.csv</a></li>
-      </ul>
-
-      <h3><span class="chip eng">Engineering</span> Specs &amp; tokens</h3>
-      <ul class="source-list">
-        <li><span>PRE_OMW_RISK_SCORE Spec v1.1</span><a href="specs/PRE_OMW_RISK_SCORE_Spec_v1.1.docx">docx</a></li>
-        <li><span>PreDenom Token Spec</span><a href="specs/PreDenom_Token_Spec.docx">docx</a></li>
-        <li><span>HEDIS OMW Scoring Model</span><a href="specs/HEDIS_OMW_Scoring_Model.docx">docx</a></li>
-        <li><span>MultiModel Design Brief</span><a href="specs/MultiModel Design Brief.docx">docx</a></li>
-        <li><span>Strategic risk analysis — 5 problems &amp; opportunities</span><a href="specs/OMW_Risk_Analysis_Strategic_Opportunities.docx">docx</a></li>
-      </ul>
-
-      <h3><span class="chip ops">Ops</span> Also in original HEDIS folder (not all copied)</h3>
-      <ul class="source-list">
-        <li><span>iCloud path for broader HEDIS materials</span><span class="muted">…/CloudDocs/HEDIS/</span></li>
-        <li><span>OMW Claude Research originals</span><span class="muted">…/CloudDocs/OMW Claude Research/</span></li>
-      </ul>
-    </section>
-
-    <section class="block" id="faq">
-      <h2>FAQ</h2>
-      <details class="faq">
-        <summary>Why not just use FRAX for outreach prioritization?</summary>
-        <p>FRAX (and similar tools) predict fracture occurrence. OMW outreach prioritization needs the probability that a woman who <em>already</em> fractured will still miss BMD/therapy in 180 days. That is Model B—driven more by access, engagement, provider, and setting than by classic fracture CRFs alone.</p>
-      </details>
-      <details class="faq">
-        <summary>Does a high failure score mean we should deprioritize that member?</summary>
-        <p>No. High failure risk should trigger <em>more intensive, barrier-matched</em> help (Tier 1 / FLS-equivalent). Using SDOH or race signals to ration care would amplify disparities; the design uses them for fairness auditing and barrier removal (Navarro 2011 showed integrated case-finding can reduce disparities).</p>
-      </details>
-      <details class="faq">
-        <summary>What is the single highest-leverage inpatient action?</summary>
-        <p>Initiate osteoporosis treatment during the hip-fracture admission when appropriate (order-set / PDSA). The discharge-date clock and recovery focus make post-discharge catch-up unreliable; in-hospital initiation is the fast-track override in the outreach model.</p>
-      </details>
-      <details class="faq">
-        <summary>How do we prevent wasted outreach from late BMD claims?</summary>
-        <p>Combine (1) exclusion pre-filter on the pre-denom pool, (2) real-time pharmacy/lab exclusion refresh at ADT, and (3) a short hold window for members with intermediate N-CMP signals suggesting prior bone-health engagement before burning coordinator capacity.</p>
-      </details>
-      <details class="faq">
-        <summary>What should we validate before production?</summary>
-        <p>Retrospective run of FRAC/N-CMP (or Model B) against prior measurement years: do high scores predict actual non-compliance and fracture events? Calibrate thresholds to capacity; report discrimination, calibration, top-K precision, and subgroup reach. Temporal validation is mandatory.</p>
-      </details>
-      <details class="faq">
-        <summary>How should we share this hub?</summary>
-        <p>Zip or share the entire <code>OMW Team Hub</code> folder via OneDrive/iCloud/Teams. Recipients open <code>index.html</code> in a browser. Relative links to demos, CSVs, markdown, and docx files stay intact when the folder structure is preserved.</p>
-      </details>
-    </section>
-
-    <p class="footer-note">
-      Synthesized from materials in <em>OMW Claude Research</em> and <em>HEDIS</em> folders (measure briefs, strategy report, model/outreach designs,
-      PRE_OMW specs, strategic risk analysis, and interactive prototypes). Not a substitute for current NCQA HEDIS Technical Specifications.
-      For production logic, re-verify value sets and exclusion windows against the active measurement year.
-    </p>
-  </main>
-</div>
-
-<script>
-/* Embedded data from source CSVs */
-const FEATURES = [{"domain": "Demographics", "feature": "age_years", "definition": "Age at episode date (measure requires 67-85)", "data_source": "Enrollment/eligibility", "model": "Both", "rationale": "Strong monotonic fracture risk; OMW denominator boundary", "direction_notes": "Older = higher fracture risk; frailty exclusions apply 81+"}, {"domain": "Demographics", "feature": "sex_female", "definition": "Female (denominator requirement)", "data_source": "Enrollment", "model": "A", "rationale": "Denominator constraint; postmenopausal risk", "direction_notes": "Fixed for OMW"}, {"domain": "Demographics", "feature": "race_ethnicity", "definition": "Race/ethnicity category", "data_source": "Enrollment/SDOH", "model": "B", "rationale": "Documented OMW-failure disparity (Boytsov 2017)", "direction_notes": "Use for fairness auditing, not to ration care"}, {"domain": "Demographics", "feature": "dual_eligible_LIS", "definition": "Medicare-Medicaid dual / low-income subsidy", "data_source": "Enrollment", "model": "B", "rationale": "Proxy for access barriers to DXA/pharmacy", "direction_notes": "Higher failure risk"}, {"domain": "Geography/SDOH", "feature": "rural_flag", "definition": "Rural vs urban residence", "data_source": "Address", "model": "B", "rationale": "Access to DXA and specialty care", "direction_notes": "Rural often higher failure"}, {"domain": "Geography/SDOH", "feature": "area_deprivation_index", "definition": "Neighborhood deprivation index", "data_source": "Address+public", "model": "B", "rationale": "Neighborhood deprivation ~ lower follow-up", "direction_notes": "Fairness-sensitive"}, {"domain": "Geography/SDOH", "feature": "dxa_facility_distance", "definition": "Distance/drive-time to nearest DXA site", "data_source": "Address+provider dir", "model": "B", "rationale": "Access friction to numerator (BMD test)", "direction_notes": "Longer = higher failure"}, {"domain": "Fracture event", "feature": "fracture_site", "definition": "Qualifying site (hip, vertebral, wrist, humerus, pelvis...)", "data_source": "Medical claims dx", "model": "Both", "rationale": "Site drives both recurrence risk and care pathway", "direction_notes": "Hip = highest risk + inpatient pathway"}, {"domain": "Fracture event", "feature": "fracture_setting", "definition": "Inpatient vs outpatient/ED episode", "data_source": "Claims (IESD)", "model": "B", "rationale": "Inpatient hip has different (better) capture pathway", "direction_notes": "Setting changes workflow"}, {"domain": "Fracture event", "feature": "index_episode_date", "definition": "IESD / discharge date anchoring 180-day window", "data_source": "Claims", "model": "B", "rationale": "Defines time-to-deadline for outreach", "direction_notes": "Operational clock"}, {"domain": "Fracture event", "feature": "prior_fracture_count", "definition": "Count of prior fragility fractures (lookback)", "data_source": "Claims history", "model": "A", "rationale": "Core Garvan predictor; strong recurrence signal", "direction_notes": "More = higher risk"}, {"domain": "Fracture event", "feature": "prior_falls", "definition": "Falls dx / injury claims in lookback", "data_source": "Claims", "model": "A", "rationale": "FRAX-2024 falls input; independent predictor", "direction_notes": "More = higher risk"}, {"domain": "Clinical/BMD", "feature": "prior_bmd_test", "definition": "BMD test in 24 mo before episode (exclusion)", "data_source": "Claims CPT", "model": "B", "rationale": "OMW exclusion; also indicates engaged patient", "direction_notes": "Excludes from denominator"}, {"domain": "Clinical/BMD", "feature": "bmd_tscore", "definition": "Most recent femoral-neck/spine T-score if available", "data_source": "EHR/lab", "model": "A", "rationale": "Direct risk input where present", "direction_notes": "Lower = higher risk; often missing"}, {"domain": "Clinical/BMD", "feature": "prior_osteoporosis_dx", "definition": "Existing osteoporosis diagnosis", "data_source": "Claims dx", "model": "Both", "rationale": "Higher recurrence risk; may already be treated", "direction_notes": "Interacts with treatment history"}, {"domain": "Medication", "feature": "prior_osteo_therapy", "definition": "Osteoporosis Rx in 12 mo before episode (exclusion)", "data_source": "Pharmacy/med claims", "model": "B", "rationale": "OMW exclusion; indicates prior treatment", "direction_notes": "Excludes from denominator"}, {"domain": "Medication", "feature": "glucocorticoid_use", "definition": "Chronic oral glucocorticoid exposure", "data_source": "Pharmacy", "model": "A", "rationale": "FRAX input; secondary osteoporosis driver", "direction_notes": "Higher risk"}, {"domain": "Medication", "feature": "polypharmacy_count", "definition": "Count of chronic medications", "data_source": "Pharmacy", "model": "B", "rationale": "Proxy for complexity/competing priorities", "direction_notes": "Higher = higher failure"}, {"domain": "Medication", "feature": "medication_adherence_pdc", "definition": "Historical PDC on chronic meds", "data_source": "Pharmacy", "model": "B", "rationale": "Behavioral proxy for filling a new Rx", "direction_notes": "Lower PDC = higher failure"}, {"domain": "Comorbidity", "feature": "comorbidity_index", "definition": "Elixhauser/CCI from claims", "data_source": "Claims", "model": "Both", "rationale": "Competing risks + care complexity", "direction_notes": "Nonlinear effect"}, {"domain": "Comorbidity", "feature": "frailty_advanced_illness", "definition": "Frailty + advanced-illness flags (HEDIS exclusion logic)", "data_source": "Claims", "model": "B", "rationale": "Drives 67-80/81+ exclusions; competing mortality", "direction_notes": "Excludes; also lowers benefit"}, {"domain": "Comorbidity", "feature": "cardiovascular_disease", "definition": "CVD diagnosis", "data_source": "Claims", "model": "A", "rationale": "Kong 2023 CDM predictor", "direction_notes": "Higher risk"}, {"domain": "Comorbidity", "feature": "bmi_category", "definition": "BMI band where available", "data_source": "EHR/claims", "model": "A", "rationale": "FRAX-2025 BMI update; low BMI = higher risk", "direction_notes": "U-shaped"}, {"domain": "Utilization", "feature": "pcp_visits_12mo", "definition": "Primary-care visit count in prior year", "data_source": "Claims", "model": "B", "rationale": "Engagement proxy; more visits = more capture chances", "direction_notes": "Lower = higher failure"}, {"domain": "Utilization", "feature": "attributed_pcp", "definition": "Has attributed/assigned PCP", "data_source": "Attribution", "model": "B", "rationale": "No usual source of care raises failure", "direction_notes": "Missing = higher failure"}, {"domain": "Utilization", "feature": "prior_gap_closure", "definition": "Historical performance on other HEDIS gaps", "data_source": "Plan quality data", "model": "B", "rationale": "Past non-adherence predicts future", "direction_notes": "Lower = higher failure"}, {"domain": "Provider", "feature": "provider_specialty", "definition": "Treating provider specialty (ortho/PCP/ED)", "data_source": "Claims", "model": "B", "rationale": "Provider factors predict OMW failure (Boytsov 2017)", "direction_notes": "Ortho-only path may miss follow-up"}, {"domain": "Provider", "feature": "provider_panel_omw_rate", "definition": "Provider/practice historical OMW rate", "data_source": "Plan quality data", "model": "B", "rationale": "Provider is a strong cluster-level predictor", "direction_notes": "Lower panel rate = higher failure"}, {"domain": "Provider", "feature": "fls_available", "definition": "Fracture Liaison Service available at treating facility", "data_source": "Provider dir/plan", "model": "B", "rationale": "FLS presence is protective (Wu 2018)", "direction_notes": "Available = lower failure"}];
-
-const TACTICS = [{"tactic": "Fracture Liaison Service (coordinator-led)", "mechanism": "Systematic case-finding + coordinated evaluation/treatment after any fragility fracture", "target": "System / care coordination", "reported_effect": "Large, consistent increases in BMD testing & treatment initiation vs usual care; most effective single strategy", "evidence": "Strong (multiple RCTs + meta-analyses)", "hedis_relevance": "Directly closes numerator (BMD or Rx within window)", "ref": "Wu 2018; Wu 2018 (SLR)", "doi": "10.1016/j.bone.2018.03.018", "doi_verified": "True"}, {"tactic": "Intensive multi-component QI (education + reminders + coordination)", "mechanism": "Combined provider + patient activation with repeated contact", "target": "Provider + patient", "reported_effect": "Meta-analysis: multifaceted interventions most effective for raising DXA testing & treatment; single-component weakest", "evidence": "Strong (meta-analysis of 43 RCTs)", "hedis_relevance": "Raises both numerator components", "ref": "Nayak 2018", "doi": "10.1002/jbmr.3437", "doi_verified": "True"}, {"tactic": "Priming/educating PCP after fracture (intensive vs minimal)", "mechanism": "Notify & motivate the primary care physician to initiate treatment", "target": "Provider", "reported_effect": "RCT: intervention increased treatment initiation vs standard care; intensive > minimal", "evidence": "Moderate-strong (RCT)", "hedis_relevance": "Drives medication numerator", "ref": "Roux 2013", "doi": "10.3899/jrheum.120908", "doi_verified": "True"}, {"tactic": "Inpatient treatment initiation during hip-fracture admission", "mechanism": "Start osteoporosis medication before discharge (order-set/PDSA)", "target": "System / inpatient workflow", "reported_effect": "QI: dramatic rise in patients meeting standard of care; captures the highest-risk group", "evidence": "Moderate (pre/post QI)", "hedis_relevance": "Closes numerator for inpatient hip fractures within window", "ref": "Kuiper 2018", "doi": "10.1007/s00198-018-4416-x", "doi_verified": "True"}, {"tactic": "Pharmacist-led case-finding & therapy initiation", "mechanism": "Clinical pharmacist identifies untreated post-fracture patients, recommends BMD/therapy", "target": "Provider / pharmacy", "reported_effect": "QI: improved screening & pharmacotherapy initiation among elderly post-fracture patients", "evidence": "Moderate (prospective QI)", "hedis_relevance": "Raises both numerator components", "ref": "Nadrash 2008", "doi": "10.1345/aph.1K541", "doi_verified": "True"}, {"tactic": "EHR-driven continuous case-finding (health-plan registry)", "mechanism": "Continuous EMR screening flags post-fracture members; can target disparities", "target": "System / population", "reported_effect": "Integrated program improved DXA/treatment rates and reduced ethnic disparities in a large plan", "evidence": "Moderate (program evaluation)", "hedis_relevance": "Population-level identification feeds outreach; aligns to denominator", "ref": "Navarro 2011", "doi": "10.1007/s11999-011-1852-8", "doi_verified": "True"}, {"tactic": "NLP/automated fracture detection from imaging reports + GP notification", "mechanism": "Computerized detection of osteoporotic fractures triggers GP reminder", "target": "System + provider", "reported_effect": "Efficient detection; GP notification coincided with a small increase in management", "evidence": "Weak-moderate (QI)", "hedis_relevance": "Improves trigger identification (denominator capture)", "ref": "Bolton 2024", "doi": "10.1071/AH24214", "doi_verified": "True"}, {"tactic": "Vertebral Fracture Assessment (VFA) added to FLS pathway", "mechanism": "Detect silent vertebral fractures to reclassify risk & prompt treatment", "target": "System / diagnostics", "reported_effect": "QI: VFA integration increased treatment initiation among eligible FLS patients", "evidence": "Weak-moderate (QI)", "hedis_relevance": "Surfaces qualifying fractures & prompts numerator action", "ref": "Greene 2023", "doi": "10.1136/bmjoq-2023-002303", "doi_verified": "True"}, {"tactic": "Plan-level care coordination (member-experienced)", "mechanism": "Better follow-up, records-at-visit, cross-provider communication", "target": "System / plan", "reported_effect": "Higher member-reported care coordination associated with better HEDIS clinical-process performance", "evidence": "Observational (large MA cohort)", "hedis_relevance": "Correlated with better measure performance broadly", "ref": "Elliott 2021", "doi": "10.1007/s11606-021-07122-8", "doi_verified": "True"}, {"tactic": "Risk-targeted outreach using patient/provider failure predictors", "mechanism": "Target women predicted to miss the HEDIS measure (race, region, setting, provider factors)", "target": "Population / model-driven", "reported_effect": "Observational: identifies subgroups less likely to achieve OMW; supports targeting", "evidence": "Observational (HEDIS-defined cohort)", "hedis_relevance": "Directly maps predictors of OMW failure", "ref": "Boytsov 2017", "doi": "10.1177/1062860617691123", "doi_verified": "True"}];
-
-const MODELS = [{"model": "FRAX (WHO)", "family": "Traditional / clinical risk factors", "population": "Postmenopausal women & men, country-calibrated", "predictors": "10 CRFs +/- femoral-neck BMD (age, BMI, prior fx, parental hip fx, glucocorticoids, RA, smoking, alcohol)", "outcome": "10-yr major osteoporotic (MOF) & hip fracture", "discrimination_auc": "~0.65-0.75 (MOF); higher for hip", "validation": "Extensively externally validated worldwide", "key_ref": "Kanis 2008; Ensrud 2009", "doi": "10.1007/s00198-007-0543-5", "doi_verified": "True"}, {"model": "Garvan (FRC)", "family": "Traditional / clinical risk factors", "population": "Adults >=50, registry & cohort", "predictors": "Age, sex, weight/BMD, prior fractures (count), falls (count)", "outcome": "5- & 10-yr any osteoporotic & hip fracture", "discrimination_auc": "Strong gradient; C-stat ~0.69-0.76; outperformed CRF/BMD alone (Manitoba)", "validation": "Validated Manitoba (n=19,521) & NZ cohorts", "key_ref": "Nguyen 2008; Agarwal 2022", "doi": "10.1007/s00198-008-0588-0", "doi_verified": "True"}, {"model": "QFracture", "family": "Traditional / EHR-derived equation", "population": "UK primary care, 30-99 yr open cohort", "predictors": "~30 clinical variables from routine primary-care records; no BMD", "outcome": "10-yr hip & osteoporotic fracture", "discrimination_auc": "Reported adjusted R2/D-stat high in derivation; C ~0.77-0.89 (hip)", "validation": "Large internal + external UK EHR validation", "key_ref": "Hippisley-Cox 2012", "doi": "10.1136/bmj.e3427", "doi_verified": "True"}, {"model": "Head-to-head external validation (FRAX vs Garvan vs QFracture)", "family": "Comparative validation", "population": "UK population EHR (THIN)", "predictors": "Tool-specific", "outcome": "Osteoporotic & hip fracture", "discrimination_auc": "All three moderate; hip fx better discriminated than MOF; calibration imperfect", "validation": "Retrospective EHR cohort", "key_ref": "Dagan 2017", "doi": "10.1136/bmj.i6755", "doi_verified": "True"}, {"model": "ML survival models (Swiss registry)", "family": "Machine learning", "population": "Swiss Osteoporosis Registry n=5,944; validated UK Biobank n=5,474", "predictors": "CRFs, T-scores, treatment history", "outcome": "Vertebral, hip, any fracture (short & long term)", "discrimination_auc": "ML ~ traditional Cox; C-index comparable, no consistent ML gain", "validation": "External (UK Biobank)", "key_ref": "Lehmann 2024", "doi": "10.1093/jbmr/zjae089", "doi_verified": "True"}, {"model": "ML risk models (meta-analysis)", "family": "Machine learning (pooled)", "population": "53 studies, 86 models, ~15.2M patients", "predictors": "Heterogeneous (EHR, clinical, imaging)", "outcome": "Fracture in osteoporosis", "discrimination_auc": "Pooled C-index ~0.80 (0.78-0.82); high heterogeneity", "validation": "Mostly internal; external validation sparse", "key_ref": "Wu 2023 (meta-analysis)", "doi": "10.1136/bmjopen-2022-071430", "doi_verified": "True"}, {"model": "AI/ML for hip fracture (systematic review)", "family": "Machine learning", "population": "7 studies, n=330,099", "predictors": "Clinical + imaging (some DXA-free)", "outcome": "Hip fracture", "discrimination_auc": "Variable; several AUC >0.80 but limited external validation", "validation": "Limited/heterogeneous", "key_ref": "Cha 2023", "doi": "10.11005/jbm.2023.30.3.245", "doi_verified": "True"}, {"model": "Common Data Model score (Korea)", "family": "Traditional score from EHR/CDM", "population": "OMOP-CDM hospital cohorts n=20,107 dev / 13,353 val", "predictors": "Prior fracture, age, LS & total-hip T-score, CVD", "outcome": "Major osteoporotic & hip fracture", "discrimination_auc": "User-friendly score; validated independent cohort", "validation": "Independent Korean cohort", "key_ref": "Kong 2023", "doi": "10.1007/s00198-023-06787-7", "doi_verified": "True"}];
-
-function esc(s) {
-  return String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-function fillFeatures() {
-  const tb = document.querySelector("#featureTable tbody");
-  tb.innerHTML = FEATURES.map(r =>
-    `<tr><td>${esc(r.domain)}</td><td><code>${esc(r.feature)}</code><br><span class="muted">${esc(r.definition)}</span></td><td>${esc(r.model)}</td><td>${esc(r.rationale)}</td></tr>`
-  ).join("");
-}
-
-function fillTactics() {
-  const tb = document.querySelector("#tacticsTable tbody");
-  tb.innerHTML = TACTICS.map(r =>
-    `<tr><td><strong>${esc(r.tactic)}</strong></td><td>${esc(r.evidence)}</td><td>${esc(r.reported_effect)}</td><td>${esc(r.hedis_relevance)}</td><td>${esc(r.ref)}</td></tr>`
-  ).join("");
-}
-
-function fillModels() {
-  const tb = document.querySelector("#modelsTable tbody");
-  tb.innerHTML = MODELS.map(r =>
-    `<tr><td><strong>${esc(r.model)}</strong><br><span class="muted">${esc(r.family)}</span></td><td>${esc(r.family)}</td><td>${esc(r.discrimination_auc)}</td><td>${esc(r.validation)}</td><td>${esc(r.key_ref)}</td></tr>`
-  ).join("");
-}
-
-/* Nav filter */
-document.getElementById("navSearch").addEventListener("input", (e) => {
-  const q = e.target.value.trim().toLowerCase();
-  document.querySelectorAll("#sideNav a").forEach(a => {
-    const show = !q || a.textContent.toLowerCase().includes(q);
-    a.classList.toggle("hidden", !show);
-  });
-  document.querySelectorAll("#sideNav .nav-section").forEach(sec => {
-    let el = sec.nextElementSibling;
-    let any = false;
-    while (el && !el.classList.contains("nav-section")) {
-      if (el.matches("a") && !el.classList.contains("hidden")) any = true;
-      el = el.nextElementSibling;
-    }
-    sec.classList.toggle("hidden", q && !any);
-  });
-});
-
-/* Active section highlight */
-const sections = [...document.querySelectorAll("section.block, #overview")];
-const navLinks = [...document.querySelectorAll("#sideNav a")];
-const byId = Object.fromEntries(navLinks.map(a => [a.getAttribute("href").slice(1), a]));
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(en => {
-    if (en.isIntersecting) {
-      navLinks.forEach(a => a.classList.remove("active"));
-      const link = byId[en.target.id];
-      if (link) link.classList.add("active");
-    }
-  });
-}, { rootMargin: "-20% 0px -70% 0px", threshold: 0.01 });
-sections.forEach(s => io.observe(s));
-
-fillFeatures();
-fillTactics();
-fillModels();
-</script>
+  <dialog id="searchDialog">
+    <form method="dialog" class="dialog-shell"><div class="dialog-heading"><div><p class="eyebrow">Studio-wide search</p><h2>Find planning content</h2></div><button aria-label="Close">×</button></div><input id="globalSearch" type="search" placeholder="Search decisions, assumptions, interventions, risks…" autofocus><div id="searchResults"></div></form>
+  </dialog>
+  <dialog id="decisionDialog">
+    <form id="decisionForm" method="dialog" class="dialog-shell"><div class="dialog-heading"><div><p class="eyebrow">Decision record</p><h2 id="decisionDialogTitle">Add decision</h2></div><button value="cancel" aria-label="Close">×</button></div><input type="hidden" name="id"><div class="form-grid"><label class="full">Title<input required name="title"></label><label>Status<select name="status"></select></label><label>Owner<input name="owner" placeholder="Role placeholder"></label><label class="full">Decision statement<textarea required name="statement"></textarea></label><label class="full">Rationale<textarea name="rationale"></textarea></label><label>Review date<input type="date" name="reviewDate"></label><label>Success measure<input name="successMeasure"></label></div><div class="dialog-actions"><button value="cancel" class="secondary-button">Cancel</button><button id="saveDecision" value="default" class="primary-button">Save locally</button></div></form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="assets/metrics.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>

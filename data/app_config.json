@@ -1,0 +1,9 @@
+{
+  "product": "OMW Strategy Studio",
+  "subtitle": "An interactive planning environment for measure performance, population strategy, intervention design, and operational readiness.",
+  "dataClassification": "SYNTHETIC_DEMONSTRATION_ONLY",
+  "persistence": "none",
+  "telemetry": false,
+  "externalApis": false,
+  "privacyNotice": "Demonstration and planning environment. Use synthetic or approved aggregate data only. Do not upload PHI, member-identifiable data, confidential company information, credentials, or proprietary datasets."
+}
