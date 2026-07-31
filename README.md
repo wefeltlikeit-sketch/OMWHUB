@@ -1,12 +1,14 @@
-# OMW Team Hub
+# OMW Strategy Studio
 
-A shareable, offline-friendly package that consolidates OMW (Osteoporosis Management in Women Who Had a Fracture) research, measure logic, dual risk models, outreach design, engineering specs, and interactive demos.
+A data-safe, offline-friendly planning environment for OMW targets, intervention strategy, operational capacity, decisions, assumptions, and implementation work. It remains useful without real company or member data.
+
+The original OMW Team Hub is preserved as `knowledge.html` and remains the knowledge-library portion of the application.
 
 ## How to open
 
 1. Open **`index.html`** in any modern browser (Chrome, Edge, Safari, Firefox).
-2. Use the left navigation or role-based “Start here” paths.
-3. Linked demos, CSVs, markdown, and Word specs open from the same folder.
+2. Use the navigation to open the Strategy Cockpit, Target Planner, Scenario Lab, Intervention Portfolio, Journey Funnel, Decision Registry, Assumption Ledger, Roadmap, Data Safety page, or original Evidence Library.
+3. Adjust synthetic assumptions and export local planning summaries.
 
 No install or server required.
 
@@ -28,7 +30,11 @@ Send `OMW_Team_Hub.zip`. Recipients unzip and open `index.html`.
 
 | Path | Contents |
 |------|----------|
-| `index.html` | Navigable hub (start here) |
+| `index.html` | OMW Strategy Studio (start here) |
+| `knowledge.html` | Preserved OMW Team Hub and evidence library |
+| `assets/` | Shared design system, application behavior, and metric calculations |
+| `data/` | Human-readable synthetic configuration and central metric definitions |
+| `tests/` | Calculation and public-repository privacy checks |
 | `OMW_Gap_Closing_Strategy.pptx` | 14-slide strategy deck on gap-closing focus areas |
 | `sources/` | Strategy report, measure brief, model & outreach designs, CSVs |
 | `specs/` | PRE_OMW risk score, token specs, strategic risk analysis (docx) |
@@ -43,7 +49,25 @@ Send `OMW_Team_Hub.zip`. Recipients unzip and open `index.html`.
 - **Care management** → Outreach → Tiers → Tactics  
 - **Engineering** → Architecture → PRE_OMW_RISK_SCORE → Demos  
 
-## Important caveat
+## Data boundary
+
+This public repository must contain only public knowledge, synthetic demonstrations, generic assumptions, and blank templates. Do not commit PHI, member-identifiable information, provider-identifiable performance, proprietary company values, credentials, internal URLs, screenshots, or system exports.
+
+The application:
+
+- makes no external API calls;
+- includes no analytics or telemetry;
+- stores no edits beyond the current browser tab;
+- labels demonstrations and exports as synthetic or user-entered planning assumptions.
+
+## Validation
+
+```bash
+npm test
+npm run privacy-check
+```
+
+## Important measure caveat
 
 Measure logic and token work reference HEDIS materials around MY2024–MY2026 drafts. **Confirm all code sets, exclusion windows, and value sets against the current NCQA HEDIS Technical Specifications before production use.**
 

@@ -1,0 +1,9 @@
+[
+  {"id":"compliance_rate","name":"Compliance rate","formula":"numerator / denominator × 100","unit":"percent"},
+  {"id":"required_numerator","name":"Required numerator","formula":"ceiling(projected denominator × target rate)","unit":"members"},
+  {"id":"additional_closures","name":"Additional closures required","formula":"max(0, required numerator − current numerator − natural closures)","unit":"closures"},
+  {"id":"capacity_utilization","name":"Capacity utilization","formula":"required staff hours / available staff hours × 100","unit":"percent"},
+  {"id":"expected_intervention_closures","name":"Expected intervention closures","formula":"eligible population × reach rate × incremental effect, adjusted for overlap","unit":"closures"},
+  {"id":"cost_per_closure","name":"Estimated cost per incremental closure","formula":"portfolio cost / expected incremental closures","unit":"currency"},
+  {"id":"funnel_conversion","name":"Stage conversion","formula":"current stage count / prior stage count × 100","unit":"percent"}
+]

@@ -1,0 +1,8 @@
+[
+  {"id":"R-001","initiative":"Validate numerator and exclusion logic","workstream":"Measure validation","status":"In progress","priority":"High","targetDate":"2026-08-14","dependency":"Current specification review"},
+  {"id":"R-002","initiative":"Profile synthetic signal latency","workstream":"Data readiness","status":"In progress","priority":"High","targetDate":"2026-08-21","dependency":"Source inventory"},
+  {"id":"R-003","initiative":"Define dual-model cohorts","workstream":"Cohort development","status":"Planned","priority":"High","targetDate":"2026-09-04","dependency":"R-001"},
+  {"id":"R-004","initiative":"Design inpatient fast-track workflow","workstream":"Intervention design","status":"In progress","priority":"High","targetDate":"2026-08-28","dependency":"Clinical review"},
+  {"id":"R-005","initiative":"Build capacity threshold simulation","workstream":"Model development","status":"Planned","priority":"Medium","targetDate":"2026-09-11","dependency":"R-003"},
+  {"id":"R-006","initiative":"Specify enriched workflow alert","workstream":"Workflow integration","status":"Blocked","priority":"High","targetDate":"2026-09-18","dependency":"Platform decision"}
+]
